@@ -11,7 +11,7 @@ class Home extends Component {
     this.state = {
       ElectionInstance: undefined,
       web3: null,
-      accounts: null,
+      account: null,
       isOwner: false
     };
   }
