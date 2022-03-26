@@ -11,7 +11,8 @@ ReactDOM.render(
         <Switch>
             <Route exact path='/' component={App} />
         </Switch>
-    </Router>
+    </Router>,
+    document.getElementById('root')
 
 );
 

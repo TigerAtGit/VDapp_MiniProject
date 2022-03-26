@@ -29,10 +29,10 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      // const deployedNetwork = SimpleStorageContract.networks[networkId];
+      const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
         ElectionContract.abi,
-        // deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address,
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
@@ -40,7 +40,7 @@ class App extends Component {
       this.setState({ ElectionInstance: instance, web3: web3, accounts: accounts[0] });
 
     const owner = await this.state.ElectionInstance.methods.getOwner().call();
-    if(this.state.account == owner){
+    if(this.state.account === owner){
       this.setState({isOwner : true})
     }
 
@@ -59,18 +59,18 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+  // runExample = async () => {
+  //   const { accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+  //   // Stores a given value, 5 by default.
+  //   await contract.methods.set(5).send({ from: accounts[0] });
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+  //   // Get the value from the contract to prove it worked.
+  //   const response = await contract.methods.get().call();
 
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
+  //   // Update state with the result.
+  //   this.setState({ storageValue: response });
+  // };
 
   render() {
     if (!this.state.web3) {
