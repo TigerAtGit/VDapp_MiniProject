@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import getWeb3 from "../getWeb3";
-import ElectionContract from "../contracts/ElectionContract.json";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import getWeb3 from "./getWeb3";
+import ElectionContract from "./contracts/ElectionContract.json";
+import Navbar from './components/Navbar/NavBar';
+import Home from './pages/admin/home';
+import Candidates from './pages/admin/Candidates';
+import Verifyvoter from './pages/admin/Verifyvoter';
+import Addcandidates from './pages/admin/Addcandidates';
+import Phase from './pages/admin/Phase';
+import Results from './pages/admin/Results';
 
-import "../App.css";
+import "./App.css";
 
-class Home extends Component {
+class App extends Component {
 
   constructor(props) {
     super(props)
@@ -63,23 +71,34 @@ class Home extends Component {
   };
 
   render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
+    // if (!this.state.web3) {
+    //   return <div>Loading Web3, accounts, and contract...</div>;
+    // }
     return (
-      <div>
-        Hello Piyush!
-        <div>
-          your user address is {this.state.account}
-        </div>
-        {this.state.isOwner ?
-          <div>Yes you are the owner</div> :
-          <div>No you are not the owner</div>
-        }
+      // <div>
+      //   Hello Piyush!
+      //   <div>
+      //     your user address is {this.state.account}
+      //   </div>
+      //   {this.state.isOwner ?
+      //     <div>Yes you are the owner</div> :
+      //     <div>No you are not the owner</div>
+      //   }
 
-      </div>
+      // </div>
+      <Router>
+      <Navbar />
+      <Switch>
+        <Route path='/home' exact component={Home} />
+        <Route path='/candidates' component={Candidates} />
+        <Route path='/verify-voter' component={Verifyvoter} />
+        <Route path='/add-candidate' component={Addcandidates} />
+        <Route path='/results' component={Results} />
+        <Route path='/phase' component={Phase} />
+      </Switch>
+    </Router>
     );
   }
 }
 
-export default Home;
+export default App;
