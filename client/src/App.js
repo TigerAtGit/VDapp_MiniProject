@@ -1,27 +1,37 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import getWeb3 from "./getWeb3";
 import ElectionContract from "./contracts/ElectionContract.json";
+import Navbar from './components/Navbar/NavBar';
+import Home from './pages/admin/home';
+import Candidates from './pages/admin/Candidates';
+import Verifyvoter from './pages/admin/Verifyvoter';
+import Addcandidates from './pages/admin/Addcandidates';
+import Phase from './pages/admin/Phase';
+import Results from './pages/admin/Results';
 
 import "./App.css";
 
 class App extends Component {
-  
-  constructor(props){
-    super(props)
-    this.state = { ElectionInstance: undefined, web3: null, accounts: null, isOwner: false };
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      ElectionInstance: undefined,
+      web3: null,
+      accounts: null,
+      isOwner: false
+    };
   }
 
-  
-  componentDidMount = async () => {
-    try {
 
-      // FOR REFRESHING PAGE ONLY ONCE -
-      // if(!window.location.hash){
-      //   window.location = window.location + '#loaded';
-      //   window.location.reload();
-      //   }
-      // Get network provider and web3 instance.
+  componentDidMount = async () => {
+
+    if (!window.location.hash) {
+      window.location = window.location + '#loaded';
+      window.location.reload();
+    }
+    try {
       const web3 = await getWeb3();
 
       // Use web3 to get the user's accounts.
@@ -37,17 +47,18 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ ElectionInstance: instance, web3: web3, accounts: accounts[0] });
+      this.setState({ ElectionInstance: instance, web3: web3, account: accounts[0] });
+      console.log(accounts[0]);
 
-    const owner = await this.state.ElectionInstance.methods.getOwner().call();
-    if(this.state.account === owner){
-      this.setState({isOwner : true})
-    }
+      const owner = await this.state.ElectionInstance.methods.getOwner().call();
+      if (this.state.account === owner) {
+        this.setState({ isOwner: true })
+      }
 
-    let start = await this.state.ElectionInstance.methods.getStart().call();
-    let end = await this.state.ElectionInstance.methods.getEnd().call();
+      let start = await this.state.ElectionInstance.methods.getStart().call();
+      let end = await this.state.ElectionInstance.methods.getEnd().call();
 
-    this.setState({start : start, end : end })
+      this.setState({ start: start, end: end })
 
 
     } catch (error) {
@@ -59,35 +70,33 @@ class App extends Component {
     }
   };
 
-  // runExample = async () => {
-  //   const { accounts, contract } = this.state;
-
-  //   // Stores a given value, 5 by default.
-  //   await contract.methods.set(5).send({ from: accounts[0] });
-
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.methods.get().call();
-
-  //   // Update state with the result.
-  //   this.setState({ storageValue: response });
-  // };
-
   render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
+    // if (!this.state.web3) {
+    //   return <div>Loading Web3, accounts, and contract...</div>;
+    // }
     return (
-      <div className="App">
-        Hello
-        <div>
-          your user address is {this.state.account}
-        </div>
-        {this.state.isOwner?
-        <div>Yes you are the owner</div> :
-        <div>No you are not the owner</div>
-        }
+      // <div>
+      //   Hello Piyush!
+      //   <div>
+      //     your user address is {this.state.account}
+      //   </div>
+      //   {this.state.isOwner ?
+      //     <div>Yes you are the owner</div> :
+      //     <div>No you are not the owner</div>
+      //   }
 
-      </div>
+      // </div>
+      <Router>
+      <Navbar />
+      <Switch>
+        <Route path='/home' exact component={Home} />
+        <Route path='/candidates' component={Candidates} />
+        <Route path='/verify-voter' component={Verifyvoter} />
+        <Route path='/add-candidate' component={Addcandidates} />
+        <Route path='/results' component={Results} />
+        <Route path='/phase' component={Phase} />
+      </Switch>
+    </Router>
     );
   }
 }
