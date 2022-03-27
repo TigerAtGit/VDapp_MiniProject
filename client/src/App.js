@@ -5,10 +5,12 @@ import ElectionContract from "./contracts/ElectionContract.json";
 import Navbar from './components/Navbar/NavBar';
 import Home from './pages/admin/home';
 import Candidates from './pages/admin/Candidates';
+import Vote from './pages/admin/Vote';
 import Verifyvoter from './pages/admin/Verifyvoter';
 import Addcandidates from './pages/admin/Addcandidates';
 import Phase from './pages/admin/Phase';
 import Results from './pages/admin/Results';
+import NavBarUser from './components/Navbar/NavBarUser';
 
 import "./App.css";
 
@@ -75,28 +77,64 @@ class App extends Component {
     //   return <div>Loading Web3, accounts, and contract...</div>;
     // }
     return (
-      // <div>
-      //   Hello Piyush!
-      //   <div>
-      //     your user address is {this.state.account}
-      //   </div>
-      //   {this.state.isOwner ?
-      //     <div>Yes you are the owner</div> :
-      //     <div>No you are not the owner</div>
-      //   }
 
-      // </div>
-      <Router>
-      <Navbar />
-      <Switch>
-        <Route path='/home' exact component={Home} />
-        <Route path='/candidates' component={Candidates} />
-        <Route path='/verify-voter' component={Verifyvoter} />
-        <Route path='/add-candidate' component={Addcandidates} />
-        <Route path='/results' component={Results} />
-        <Route path='/phase' component={Phase} />
-      </Switch>
-    </Router>
+      < Router >
+        <div>
+          Hello Kush!
+          <div>
+            your user address is {this.state.account}
+          </div>
+          {this.state.isOwner ?
+            <div>Yes you are the owner</div> :
+            <div>No you are not the owner</div>
+          }
+
+        </div>
+        {this.state.isOwner ?
+          <Router>
+            <Navbar />
+            <Switch>
+              <Route path='/home' exact component={Home} />
+              <Route path='/candidates' component={Candidates} />
+              <Route path='/verify-voter' component={Verifyvoter} />
+              <Route path='/add-candidate' component={Addcandidates} />
+              <Route path='/results' component={Results} />
+              <Route path='/phase' component={Phase} />
+            </Switch>
+          </Router> :
+          <Router>
+            <NavBarUser />
+            <Switch>
+              <Route path='/home' exact component={Home} />
+              <Route path='/candidates' component={Candidates} />
+              <Route path='/vote' component={Vote} />
+            </Switch>
+          </Router>
+
+
+
+        }
+
+
+      </Router >
+      // <Router>
+      //   <Navbar />
+      //   <Switch>
+      //     <Route path='/home' exact component={Home} />
+      //     <Route path='/candidates' component={Candidates} />
+      //     <Route path='/verify-voter' component={Verifyvoter} />
+      //     <Route path='/add-candidate' component={Addcandidates} />
+      //     <Route path='/results' component={Results} />
+      //     <Route path='/phase' component={Phase} />
+      //   </Switch>
+      // </Router>
+      // <Router>
+      //       <NavBarUser />
+      //       <Switch>
+      //         <Route path='/home' exact component={Home} />
+      //         <Route path='/candidates' component={Candidates} />
+      //       </Switch>
+      // </Router>
     );
   }
 }
