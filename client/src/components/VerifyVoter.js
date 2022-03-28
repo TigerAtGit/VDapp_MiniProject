@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = () => {
+const VerifyVoter = () => {
   return (
     <div
       style={{
@@ -10,9 +10,9 @@ const Home = () => {
         height: '90vh'
       }}
     >
-      <h1>Home</h1>
+      <h1>Verify Voter</h1>
     </div>
   );
 };
 
-export default Home;
+export default VerifyVoter;

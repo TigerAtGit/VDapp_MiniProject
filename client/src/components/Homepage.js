@@ -1,18 +1,11 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import getWeb3 from "./getWeb3";
-import ElectionContract from "./contracts/ElectionContract.json";
-import Navbar from './components/Navbar/NavBar';
-import Home from './pages/admin/home';
-import Candidates from './pages/admin/Candidates';
-import Verifyvoter from './pages/admin/Verifyvoter';
-import Addcandidates from './pages/admin/Addcandidates';
-import Phase from './pages/admin/Phase';
-import Results from './pages/admin/Results';
+import React, { Component } from 'react';
+import getWeb3 from "../getWeb3";
+import ElectionContract from "../contracts/ElectionContract.json";
+import "../App.css";
+import NavBarAdmin from './NavBarAdmin';
+import NavBarVoter from './NavBarVoter';
 
-import "./App.css";
-
-class App extends Component {
+class Homepage extends Component {
 
   constructor(props) {
     super(props)
@@ -71,34 +64,32 @@ class App extends Component {
   };
 
   render() {
-    // if (!this.state.web3) {
-    //   return <div>Loading Web3, accounts, and contract...</div>;
-    // }
+    if (!this.state.web3) {
+      return (
+      <div>
+        <h1>Loading Web3, accounts, and contract...</h1>
+        {this.state.isOwner ? <NavBarAdmin/> : <NavBarVoter/>}
+      </div>
+      );
+    }
     return (
-      // <div>
-      //   Hello Piyush!
-      //   <div>
-      //     your user address is {this.state.account}
-      //   </div>
-      //   {this.state.isOwner ?
-      //     <div>Yes you are the owner</div> :
-      //     <div>No you are not the owner</div>
-      //   }
+      <div className='App'>
+        <h1>ADMIN PORTAL</h1>
+        {this.state.isOwner ? <NavBarAdmin/> : <NavBarVoter/>}
+        <div>
+          Your user address is {this.state.account}
+        </div>
+        {this.state.isOwner ?
+          <div>Yes you are the owner</div> :
+          <div>No you are not the owner</div>
+        }
+        <div>
+          WELCOME TO VDAPP
+        </div>
 
-      // </div>
-      <Router>
-      <Navbar />
-      <Switch>
-        <Route path='/home' exact component={Home} />
-        <Route path='/candidates' component={Candidates} />
-        <Route path='/verify-voter' component={Verifyvoter} />
-        <Route path='/add-candidate' component={Addcandidates} />
-        <Route path='/results' component={Results} />
-        <Route path='/phase' component={Phase} />
-      </Switch>
-    </Router>
+      </div>
     );
   }
 }
 
-export default App;
+export default Homepage;

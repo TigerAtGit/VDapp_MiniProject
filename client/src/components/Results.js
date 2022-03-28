@@ -1,4 +1,6 @@
 import React from 'react';
+import NavBarAdmin from './NavBarAdmin';
+import NavBarVoter from './NavBarVoter';
 
 const Results = () => {
   return (
@@ -10,6 +12,7 @@ const Results = () => {
         height: '90vh'
       }}
     >
+      
       <h1>Results</h1>
     </div>
   );
