@@ -41,7 +41,6 @@ class Homepage extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ ElectionInstance: instance, web3: web3, account: accounts[0] });
-      console.log(accounts[0]);
 
       const owner = await this.state.ElectionInstance.methods.getOwner().call();
       if (this.state.account === owner) {
@@ -67,26 +66,28 @@ class Homepage extends Component {
     if (!this.state.web3) {
       return (
       <div>
-        <h1>Loading Web3, accounts, and contract...</h1>
         {this.state.isOwner ? <NavBarAdmin/> : <NavBarVoter/>}
+        <h2>Connecting to Web3...</h2>
       </div>
       );
     }
     return (
       <div className='App'>
-        <h1>ADMIN PORTAL</h1>
         {this.state.isOwner ? <NavBarAdmin/> : <NavBarVoter/>}
+        <div>
+          <h1>WELCOME TO VDAPP</h1>
+        </div>
         <div>
           Your user address is {this.state.account}
         </div>
         {this.state.isOwner ?
-          <div>Yes you are the owner</div> :
-          <div>No you are not the owner</div>
+          <div>
+            <h3>You are ADMIN</h3>
+          </div> :
+          <div>
+            <h3>You are NOT ADMIN</h3>
+          </div>
         }
-        <div>
-          WELCOME TO VDAPP
-        </div>
-
       </div>
     );
   }

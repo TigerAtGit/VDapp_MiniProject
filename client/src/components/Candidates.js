@@ -16,7 +16,6 @@ class Candidates extends Component {
       web3: null,
       candidateCount: 0,
       candidateList: null,
-      loaded: false,
       isOwner: false
     }
   }
@@ -29,10 +28,8 @@ class Candidates extends Component {
     try {
       const web3 = await getWeb3();
 
-      // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
-      // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -40,8 +37,6 @@ class Candidates extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
       this.setState({ ElectionInstance: instance, web3: web3, account: accounts[0] });
 
       let candidateCount = await this.state.ElectionInstance.methods.getTotalCandidates().call();
@@ -60,9 +55,8 @@ class Candidates extends Component {
       }
 
     } catch (error) {
-      // Catch any errors for any of the above operations.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+        `Failed to load candidate details!`,
       );
       console.error(error);
     }
@@ -98,8 +92,8 @@ class Candidates extends Component {
     if (!this.state.web3) {
       return (
         <div>
-          <h2>Loading Web3, accounts and contract..</h2>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Getting details...</h2>
         </div>
       )
     }

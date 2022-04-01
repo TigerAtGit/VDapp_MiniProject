@@ -30,7 +30,9 @@ class Voting extends Component {
 
   castVote = async () => {
     let candidate = await this.state.ElectionInstance.methods.candidateDetails(this.state.candidateId).call();
-      await this.state.ElectionInstance.methods.castVote(this.state.candidateId).send({from : this.state.account , gas: 1000000});
+      await this.state.ElectionInstance.methods.castVote(this.state.candidateId).send(
+        {from : this.state.account , gas: 1000000}
+      );
       this.setState({toggle : false});
     window.location.reload(false);
   }
@@ -82,7 +84,7 @@ class Voting extends Component {
       
     } catch (error) {
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+        `Failed to load results!`,
       );
       console.error(error);
     }
@@ -119,32 +121,26 @@ class Voting extends Component {
     if (!this.state.web3) {
       return (
         <div>
-            <h1>
-            Loading Web3, accounts, and contract..
-            </h1>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Loading results...</h2>
         </div>
-        
       );
     }
 
     if(this.state.end){
       return(
         <div>
-            <h1>
-              VOTING HAS ENDED
-            </h1>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>VOTING HAS ENDED!</h2>
         </div>
       );
     }
 
     if(!this.state.start){
       return(
-        <div className="CandidateDetails">
-          <h1>VOTING HAS NOT STARTED.</h1>
-          <h2>Election phase is yet to start</h2>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        <div>
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h1>VOTING HAS NOT STARTED YET</h1>
         </div>
       );
     }
@@ -172,9 +168,9 @@ class Voting extends Component {
       if(this.state.myAccount.hasVoted){
         return(
           <div>
-          <h1>YOU HAVE SUCCESSFULLY CASTED YOUR VOTE</h1>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        </div>
+            {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+            <h2>YOU HAVE SUCCESSFULLY CASTED YOUR VOTE</h2>
+          </div>
         );
       }
     }
@@ -216,41 +212,5 @@ class Voting extends Component {
     );
   }
 }
-//   render() {
-//     return (
-//       <div>
-//         <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
-//           <div className="wrapper wrapper--w780">
-//             <div className="card card-3">
-
-//               <div className="card-body">
-//                 <h2 className="title">Vote</h2>
-//                 <div className="form">
-//                   <div className="input-group">
-//                     <input
-//                       className="input--style-3"
-//                       type="text"
-//                       placeholder="Candidate id"
-//                       value={this.state.candidateId}
-//                       onChange={this.updateCandidateId}
-//                     />
-//                   </div>
-//                   <div className="p-t-10">
-//                     <button className="btn  btn--blue" onClick={this.castVote}>
-//                       Vote
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//         <div>
-//           {candidateList}
-//         </div>
-//       </div>
-//     )
-//   }
-// }
 
 export default Voting;

@@ -74,8 +74,8 @@ class AddCandidate extends Component {
     if (!this.state.web3) {
       return (
         <div>
-          <h1>Loading Web3, accounts, and contract...</h1>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Connecting to Web3...</h2>
         </div>
       );
     }
@@ -83,8 +83,8 @@ class AddCandidate extends Component {
     if (!this.state.isOwner) {
       return (
         <div>
-          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
         </div>
       );
     }

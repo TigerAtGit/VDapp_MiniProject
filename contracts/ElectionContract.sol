@@ -84,7 +84,7 @@ contract ElectionContract {
         require(voterDetails[msg.sender].hasVoted == false);
         require(start == true);
         require(end == false);
-        candidateDetails[candidateId].voteCount += 1;
+        candidateDetails[candidateId - 1001].voteCount += 1;
         voterDetails[msg.sender].hasVoted = true;
     }
 

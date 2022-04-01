@@ -10,6 +10,7 @@ import VerifyVoter from './components/VerifyVoter';
 import Results from './components/Results';
 import Phase from './components/Phase';
 import Voting from './components/Voting';
+import Register from './components/Register'
 
 ReactDOM.render(
     <Router history={history}>
@@ -21,6 +22,7 @@ ReactDOM.render(
             <Route path='/Result' component={Results} />
             <Route path='/Phase' component={Phase} />
             <Route path='/Vote' component={Voting} />
+            <Route path='/Register' component={Register} />
         </Switch>
     </Router>,
     document.getElementById('root')

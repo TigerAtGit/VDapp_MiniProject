@@ -4,7 +4,7 @@ import ElectionContract from "../contracts/ElectionContract.json";
 import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
 
-class VerifyVoter extends Component {
+class Register extends Component {
 
   constructor(props) {
     super(props)
@@ -60,9 +60,9 @@ class VerifyVoter extends Component {
     return(
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <h2>Verify Voter</h2>
+        <h2>Register Request</h2>
       </div>
     )
   }
 }
-export default VerifyVoter;
+export default Register;

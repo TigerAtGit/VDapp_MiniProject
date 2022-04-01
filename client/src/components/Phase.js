@@ -21,12 +21,16 @@ class Phase extends Component{
   }
 
   startElection = async () => {
-    await this.state.ElectionInstance.methods.startElection().send({from : this.state.account , gas: 1000000});
+    await this.state.ElectionInstance.methods.startElection().send(
+      {from : this.state.account , gas: 1000000}
+    );
     window.location.reload(false);
   }
 
   endElection = async () => {
-    await this.state.ElectionInstance.methods.endElection().send({from : this.state.account , gas: 1000000});
+    await this.state.ElectionInstance.methods.endElection().send(
+      {from : this.state.account , gas: 1000000}
+    );
     window.location.reload(false);
   }
 
@@ -64,7 +68,7 @@ class Phase extends Component{
       
     } catch (error) {
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+        `Failed to connect with Web3!`,
       );
       console.error(error);
     }
@@ -74,17 +78,17 @@ class Phase extends Component{
     if (!this.state.web3) {
       return (
         <div>
-          <h1>Loading Web3, accounts, and contract..</h1>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Connecting to Web3...</h2>
         </div>
       );
     }
 
     if(!this.state.isOwner){
       return(
-        <div className="CandidateDetails">
-          <h1>THIS CAN BE ACCESSED BY ADMIN ONLY!</h1>
+        <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h1>THIS CAN BE ACCESSED BY ADMIN ONLY!</h1>
         </div>
       );
     }
@@ -97,7 +101,7 @@ class Phase extends Component{
             : <Button onClick={this.startElection} className="btn btn-lg btn-success mt-4">Start Election</Button>
           }
           {this.state.end
-            ? <Button onClick={this.endElection} className="btn btn-lg btn-danger mt-4 mx-4">End Election</Button>
+            ? <Button onClick={this.endElection} className="btn btn-lg btn-secondary mt-4 mx-4">End Election</Button>
             : <Button onClick={this.endElection} className="btn btn-lg btn-danger mt-4 mx-4">End Election</Button>
           }
         </div>
