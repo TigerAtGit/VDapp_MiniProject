@@ -78,13 +78,15 @@ class Candidates extends Component {
               />
               <h5 className="mb-0">{candidate.name}</h5>
               <span className="small text-uppercase text-muted">
-                Party: {candidate.party} <br/>
+                Party: {candidate.party} <br />
               </span>
               <span className="small text-uppercase text-muted">
                 Candidate Id: {candidate.candidateId}
               </span>
             </div>
           </div>
+
+
         );
       });
     }

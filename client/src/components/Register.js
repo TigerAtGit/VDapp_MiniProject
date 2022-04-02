@@ -56,11 +56,40 @@ class Register extends Component {
     }
   };
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <h2>Register Request</h2>
+        <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
+          <div className="wrapper wrapper--w780">
+            <div className="card card-3">
+              <div className="card-body">
+                <h2 className="title">Voter Details</h2>
+                <div className="form">
+                  <div className="input-group">
+                    <input
+                      className="input--style-3"
+                      type="text"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div className="input-group">
+                    <input
+                      className="input--style-3"
+                      type="text"
+                      placeholder="Addhar"
+                    />
+                  </div>
+                  <div className="p-t-10">
+                    <button className="btn  btn--blue" onClick={this.castVote} >
+                      Request to Add Voter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
