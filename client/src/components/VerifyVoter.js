@@ -3,7 +3,6 @@ import getWeb3 from "../getWeb3";
 import ElectionContract from "../contracts/ElectionContract.json";
 import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
-import { Navbar } from 'react-bootstrap';
 
 class VerifyVoter extends Component {
 
@@ -58,17 +57,13 @@ class VerifyVoter extends Component {
   };
 
 
-
-
   render() {
-
 
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
         <div className="container m-t-50">
           <div className="row text-center">
-
 
             <div className="col-xl-3 col-sm-6 mb-5 ">
               <div className="bg-black rounded shadow-sm ">
@@ -78,10 +73,10 @@ class VerifyVoter extends Component {
                     <h2 className="title">Kush</h2>
                   </div>
                   <span className="subtitle">
-                    Addhar <br />
+                    Voter ID <br />
                   </span>
                   <span className="subtitle ">
-                    9222 2020 0239 2343<br />
+                   ABC12345T<br />
                   </span>
                   <div className="p-t-20">
                     <span className="subtitle ">
@@ -95,34 +90,13 @@ class VerifyVoter extends Component {
                       Verify Voter
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
 
         </div>
-        {/* <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
-          <div className="wrapper wrapper--w680">
-            <div className="card card-3">
-              <div className="card-body">
-                <h2 className="title">Kush</h2>
-                <span className="subtitle">
-                  Addhar :  9222 2020 0239 2343<br />
-                </span>
-                <span className="subtitle">
-                  Voter address:<span classname='subtitle-light'> sdsdfafgsdfgsdfgdfsfsdfsdfsdf </span> <br />
-                </span>
-                <div className="p-t-50">
-                  <button className="btn  btn--blue" onClick={this.castVote} >
-                    Verify Voter
-                  </button>
-                </div>
 
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div >
     )
   }

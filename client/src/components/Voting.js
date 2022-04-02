@@ -91,6 +91,34 @@ class Voting extends Component {
   };
 
   render() {
+    
+    let candidateList;
+    if (this.state.candidateList) {
+      candidateList = this.state.candidateList.map((candidate) => {
+        return (
+          <div className="col-xl-3 col-sm-6 mb-5">
+            <div className="bg-white rounded shadow-sm py-5 px-4">
+              <img
+                src={candidateicon}
+                alt="candidate's pic"
+                width="200"
+                height="200"
+                className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
+              />
+              <h5 className="mb-0">{candidate.name}</h5>
+              <span className="small text-uppercase text-muted">
+                Party: {candidate.party} <br />
+              </span>
+              <span className="small text-uppercase text-muted">
+                Candidate Id: {candidate.candidateId}
+              </span>
+            </div>
+
+          </div>
+
+        );
+      });
+    }
 
     if (!this.state.web3) {
       return (
@@ -149,46 +177,11 @@ class Voting extends Component {
       }
     }
 
-    let candidateList;
-    if (this.state.candidateList) {
-      candidateList = this.state.candidateList.map((candidate) => {
-        return (
-          <div className="col-xl-3 col-sm-6 mb-5">
-            <div className="bg-white rounded shadow-sm py-5 px-4">
-              <img
-                src={candidateicon}
-                alt="candidate's pic"
-                width="200"
-                height="200"
-                className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-              />
-              <h5 className="mb-0">{candidate.name}</h5>
-              <span className="small text-uppercase text-muted">
-                Party: {candidate.party} <br />
-              </span>
-              <span className="small text-uppercase text-muted">
-                Candidate Id: {candidate.candidateId}
-              </span>
-              <div className="p-t-10">
-                <button className="btn  btn--blue" onClick={this.castVote} >
-                  Vote
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-        );
-      });
-    }
-    // onChange={this.updateCandidateId}
-
-
 
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        {/* <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
+        <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
           <div className="wrapper wrapper--w780">
             <div className="card card-3">
               <div className="card-body">
@@ -212,7 +205,7 @@ class Voting extends Component {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
           <div className="wrapper wrapper--w780"></div>
           <div className="container">

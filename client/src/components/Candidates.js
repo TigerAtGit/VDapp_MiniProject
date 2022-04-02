@@ -67,7 +67,7 @@ class Candidates extends Component {
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
-          <div className="col-xl-3 col-sm-6 mb-5">
+          <div className="col-2xl-3 col-sm-6 mb-5">
             <div className="bg-white rounded shadow-sm py-5 px-4">
               <img
                 src={candidateicon}
@@ -85,8 +85,6 @@ class Candidates extends Component {
               </span>
             </div>
           </div>
-
-
         );
       });
     }

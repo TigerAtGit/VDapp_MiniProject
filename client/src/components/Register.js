@@ -77,11 +77,11 @@ class Register extends Component {
                     <input
                       className="input--style-3"
                       type="text"
-                      placeholder="Addhar"
+                      placeholder="Voter Id"
                     />
                   </div>
                   <div className="p-t-10">
-                    <button className="btn  btn--blue" onClick={this.castVote} >
+                    <button className="btn  btn--blue" onClick='' >
                       Request to Add Voter
                     </button>
                   </div>
