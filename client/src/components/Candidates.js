@@ -67,24 +67,53 @@ class Candidates extends Component {
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
-          <div className="col-xl-3 col-sm-6 mb-5">
-            <div className="bg-white rounded shadow-sm py-5 px-4">
-              <img
-                src={candidateicon}
-                alt="candidate's pic"
-                width="200"
-                height="200"
-                className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-              />
-              <h5 className="mb-0">{candidate.name}</h5>
-              <span className="small text-uppercase text-muted">
-                Party: {candidate.party} <br/>
-              </span>
-              <span className="small text-uppercase text-muted">
-                Candidate Id: {candidate.candidateId}
-              </span>
+          // <div className="col-xl-3 col-sm-6 mb-5">
+          //   <div className="bg-white rounded shadow-sm py-5 px-4">
+          //     <img
+          //       src={candidateicon}
+          //       alt="candidate's pic"
+          //       width="200"
+          //       height="200"
+          //       className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
+          //     />
+          //     <h5 className="mb-0">{candidate.name}</h5>
+          //     <span className="small text-uppercase text-muted">
+          //       Party: {candidate.party} <br/>
+          //     </span>
+          //     <span className="small text-uppercase text-muted">
+          //       Candidate Id: {candidate.candidateId}
+          //     </span>
+          //   </div>
+          // </div>
+
+          <div className="col-xl-3 col-sm-6 mb-5 ">
+            <div className="bg-black rounded shadow-sm ">
+
+              <div className="card-body">
+                <div className="p-t-20">
+                  <h2 className="title">Kush</h2>
+                </div>
+                <span className="subtitle">
+                  Addhar <br />
+                </span>
+                <span className="subtitle ">
+                  9222 2020 0239 2343<br />
+                </span>
+                <div className="p-t-20">
+                  <span className="subtitle ">
+                    Voter address:<span classname='subtitle-light'> sdsdfafgsdfgsdfgdfsfsdfsdfsdf </span> <br />
+                  </span>
+                </div>
+                <div className="p-t-50 p-b-20">
+                  <button className="btn  btn--blue" onClick={this.castVote} >
+                    Verify Voter
+                  </button>
+                </div>
+
+              </div>
             </div>
           </div>
+
         );
       });
     }
