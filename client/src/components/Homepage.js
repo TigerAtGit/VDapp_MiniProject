@@ -84,14 +84,14 @@ class Homepage extends Component {
           <div class="row">
             <div class="col-md-6">
               <div>
-                VDapp is a e-voting Dapp made using blockchain and React.
-              </div>
-              Why do we need it?
-              <br />
-              Current voting systems like ballot box voting or electronic voting suffer from various 
-              security threats such as DDoS attacks, polling booth capturing, vote alteration and 
-              manipulation, malware attacks, etc, and also require huge amounts of paperwork, human 
-              resources, and time. This creates a sense of distrust among existing systems.
+                <b>VDapp</b> is a decentralized e-voting application developed using Blockchain.
+              </div><br></br>
+              <i>Why do we need it?</i>
+              <br /><i>
+              E-voting system can be used to conduct secure and efficient elections for a 
+              large population with minimal efforts. Blockchain guarantees the security 
+              and protection of the voters’ identity and the votes. Thus,
+              building the trust in the electoral system.</i>
             </div>
             <div class="col-md-6">
               <div 
@@ -99,7 +99,6 @@ class Homepage extends Component {
                 textAlign: "center"
               }}
               >
-                {/* <img src="../images/Mobilevoting" style="width: 100%; height: auto;" /> */}
                 <img
                   src={require("../images/Mobilevoting.jpg")}
                   style={{
@@ -114,7 +113,7 @@ class Homepage extends Component {
         </div>
 
         <div className="container-fluid" id="footer">
-          <h5>Your user address is {this.state.account}</h5>
+          <h5>Your user address is {this.state.account} {this.state.isOwner ? <p>(Admin)</p> : <p></p>}</h5>
         </div>
       </div>
     );

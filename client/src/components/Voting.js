@@ -84,14 +84,14 @@ class Voting extends Component {
 
     } catch (error) {
       alert(
-        `Failed to load results!`,
+        `Failed to load candidates!`,
       );
       console.error(error);
     }
   };
 
   render() {
-    
+
     let candidateList;
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
@@ -124,7 +124,7 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading results...</h2>
+          <h2>Loading candidates...</h2>
         </div>
       );
     }
@@ -181,7 +181,7 @@ class Voting extends Component {
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
+          <br></br>
           <div className="wrapper wrapper--w780">
             <div className="card card-3">
               <div className="card-body">
@@ -203,15 +203,12 @@ class Voting extends Component {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
-        <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
-          <div className="wrapper wrapper--w780"></div>
-          <div className="container">
-            <div className="row text-center">
-              {candidateList}
-            </div>
+        <br></br>
+        <div className="container">
+          <div className="row text-center">
+            {candidateList}
           </div>
         </div>
       </div>

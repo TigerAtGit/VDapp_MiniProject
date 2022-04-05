@@ -135,7 +135,7 @@ class Results extends Component {
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
         <div className="text-center">
-          <h1> RESULTS </h1>
+          <h1> RESULTS </h1><br></br>
           <Button onClick={this.result}>See Results</Button>
         </div>
     

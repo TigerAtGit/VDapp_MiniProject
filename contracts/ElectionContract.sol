@@ -93,6 +93,11 @@ contract ElectionContract {
         end = false;
     }
 
+    function endElection() public onlyAdmin {
+        start = false;
+        end = true;
+    }
+
     function getStart() public view returns (bool) {
         return start;
     }
