@@ -73,10 +73,10 @@ class Homepage extends Component {
     return (
       <div className="App">
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <div className="container py-5">
+        <div className="container py-4">
           <div className="text-center text-white">
             <div className="col-lg-8 mx-auto">
-              <h1 className="display-4">Welcome To VDAPP</h1>
+              <h1 className="display-4">Welcome To VDapp</h1>
             </div>
           </div>
         </div>
@@ -94,7 +94,11 @@ class Homepage extends Component {
               resources, and time. This creates a sense of distrust among existing systems.
             </div>
             <div class="col-md-6">
-              <div>
+              <div 
+              style={{
+                textAlign: "center"
+              }}
+              >
                 {/* <img src="../images/Mobilevoting" style="width: 100%; height: auto;" /> */}
                 <img
                   src={require("../images/Mobilevoting.jpg")}
