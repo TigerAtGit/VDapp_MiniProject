@@ -1,0 +1,16 @@
+#footer {
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 2%;
+    position: absolute;
+    bottom: 0px;
+}
+
+#about {
+    padding: 5%;
+    margin-top: 15px;
+    padding-top: 20px;
+    font-size: 120%;
+    text-align: left;
+}
