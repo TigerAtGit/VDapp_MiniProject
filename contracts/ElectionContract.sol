@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.4.17;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.4.16 <0.9.0;
 
 contract ElectionContract {
     address public owner;
@@ -8,7 +8,7 @@ contract ElectionContract {
     bool start;
     bool end;
 
-    function ElectionContract() public{
+    constructor() {
         owner = msg.sender;
         candidateCount = 0;
         voterCount = 0;
@@ -34,7 +34,7 @@ contract ElectionContract {
 
     mapping(uint => Candidate) public candidateDetails;
 
-    function addCandidate(string _name, string _party) public onlyAdmin{
+    function addCandidate(string memory _name, string memory _party) public onlyAdmin{
         Candidate memory newCandidate = Candidate({
             name: _name,
             party: _party,
@@ -60,7 +60,7 @@ contract ElectionContract {
     address[] public voters;
     mapping(address => Voter) public voterDetails;
 
-    function registerVoter(string _name, string _voterid) public {
+    function registerVoter(string memory _name, string memory _voterid) public {
         Voter memory newVoter = Voter({
             voterAdd: msg.sender,
             name: _name,

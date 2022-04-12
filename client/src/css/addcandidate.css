@@ -577,12 +577,6 @@ input {
     display: table;
 }
 
-.card-3 .card-heading {
-    background: url("../images/bg-heading-03.jpg") top left/cover no-repeat;
-    display: table-cell;
-    width: 50%;
-}
-
 .card-3 .card-body {
     padding: 57px 65px;
     padding-bottom: 65px;
