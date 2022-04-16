@@ -1,44 +1,57 @@
 import React, { Component } from "react";
 import "../css/addcandidate.css";
-import ElectionContract from '../contracts/ElectionContract.json';
+import ElectionContract from "../contracts/ElectionContract.json";
 import getWeb3 from "../getWeb3";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
+import UploadCandidateImage from "./UploadCandidateImage";
 
 class AddCandidate extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    //   uploadedImage = React.useRef(null);
+    // imageUploader = React.useRef(null);
 
     this.state = {
       ElectionInstance: undefined,
       account: null,
       web3: null,
-      name: '',
-      party: '',
+      name: "",
+      party: "",
+      age: "",
+      gender: "",
+      uploadedImage: null,
+      imageUploader: null,
       candidates: null,
-      isOwner: false
-    }
+      isOwner: false,
+    };
   }
 
-  updateName = event => {
-    this.setState({name : event.target.value});
-  }
+  updateName = (event) => {
+    this.setState({ name: event.target.value });
+  };
+  updateAge = (event) => {
+    this.setState({ age: event.target.value });
+  };
+  updateGender = (event) => {
+    this.setState({ gender: event.target.value });
+  };
 
-  updateParty = event => {
-    this.setState({party : event.target.value});
-  }
-
-  addCandidate = async() => {
-    await this.state.ElectionInstance.methods.addCandidate(
-      this.state.name, this.state.party
-    ).send({from : this.state.account, gas: 1000000});
+  addCandidate = async () => {
+    await this.state.ElectionInstance.methods
+      .addCandidate(
+        this.state.name,
+        this.state.party,
+        this.state.age,
+        this.state.gender
+      )
+      .send({ from: this.state.account, gas: 1000000 });
     window.location.reload(false);
-  }
+  };
 
   componentDidMount = async () => {
-
     if (!window.location.hash) {
-      window.location = window.location + '#loaded';
+      window.location = window.location + "#loaded";
       window.location.reload();
     }
 
@@ -49,13 +62,13 @@ class AddCandidate extends Component {
       const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
         ElectionContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address
       );
 
       this.setState({
         ElectionInstance: instance,
         web3: web3,
-        account: accounts[0]
+        account: accounts[0],
       });
 
       const owner = await this.state.ElectionInstance.methods.getOwner().call();
@@ -63,9 +76,7 @@ class AddCandidate extends Component {
         this.setState({ isOwner: true });
       }
     } catch (error) {
-      alert(
-        'Failed to connect with web3!'
-      );
+      alert("Failed to connect with web3!");
       console.log(error);
     }
   };
@@ -99,29 +110,57 @@ class AddCandidate extends Component {
               <div className="card-body">
                 <h2 className="title">Add Candidate</h2>
                 <div className="form">
-                  <div className="input-group">
-                    <input
-                      className="input--style-3"
-                      type="text"
-                      placeholder="Name"
-                      value={this.state.name}
-                      onChange={this.updateName}
-                    />
-                  </div>
-                  <div className="input-group">
-                    <input
-                      className="input--style-3 js-datepicker"
-                      type="text"
-                      placeholder="Party"
-                      value={this.state.party}
-                      onChange={this.updateParty}
-                    />
-                    <i className="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                  </div>
-                  <div className="p-t-10">
-                    <button className="btn btn--pill btn--green" onClick={this.addCandidate}>
-                      ADD
-                    </button>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <UploadCandidateImage />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="input-group">
+                        <input
+                          className="input--style-3"
+                          type="text"
+                          placeholder="Name"
+                          value={this.state.name}
+                          onChange={this.updateName}
+                        />
+                      </div>
+                      <div className="input-group">
+                        <input
+                          className="input--style-3"
+                          type="text"
+                          placeholder="Age"
+                          value={this.state.age}
+                          onChange={this.updateName}
+                        />
+                      </div>
+                      <div className="input-group">
+                        <input
+                          className="input--style-3"
+                          type="text"
+                          placeholder="Gender"
+                          value={this.state.age}
+                          onChange={this.updateName}
+                        />
+                      </div>
+                      <div className="input-group">
+                        <input
+                          className="input--style-3 js-datepicker"
+                          type="text"
+                          placeholder="Party"
+                          value={this.state.party}
+                          onChange={this.updateParty}
+                        />
+                        <i className="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                      </div>
+                      <div className="p-t-10">
+                        <button
+                          className="btn btn--pill btn--green"
+                          onClick={this.addCandidate}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,6 +171,5 @@ class AddCandidate extends Component {
     );
   }
 }
-
 
 export default AddCandidate;
