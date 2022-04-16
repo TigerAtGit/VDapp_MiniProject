@@ -91,9 +91,12 @@ class Candidates extends Component {
 
     if (!this.state.web3) {
       return (
-        <div>
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Getting details...</h2>
+          <div className=" d-flex align-items-center justify-content-center">
+            <h2>Getting details...</h2>
+
+          </div>
         </div>
       )
     }

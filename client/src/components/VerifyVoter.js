@@ -3,6 +3,10 @@ import getWeb3 from "../getWeb3";
 import ElectionContract from "../contracts/ElectionContract.json";
 import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+
+
 
 class VerifyVoter extends Component {
 
@@ -62,7 +66,76 @@ class VerifyVoter extends Component {
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <div className="container m-t-50">
+
+
+        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
+          <Card.Header style={{ fontSize: "20px" }}>
+            Address :
+          </Card.Header>
+          <Card.Body style={{ fontSize: "18px" }}>
+            <Card.Text>
+              Name:
+            </Card.Text>
+            <Card.Text>
+              Voter-Id:
+            </Card.Text>
+            <Card.Text>
+              Gender:
+            </Card.Text>
+            <Card.Text>
+              Age:
+            </Card.Text>
+          </Card.Body>
+          <Card.Footer>
+            <Button variant="primary">Verify Voter</Button>
+          </Card.Footer>
+        </Card>
+        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
+          <Card.Header style={{ fontSize: "20px" }}>
+            Address :
+          </Card.Header>
+          <Card.Body style={{ fontSize: "18px" }}>
+            <Card.Text>
+              Name:
+            </Card.Text>
+            <Card.Text>
+              Voter-Id:
+            </Card.Text>
+            <Card.Text>
+              Gender:
+            </Card.Text>
+            <Card.Text>
+              Age:
+            </Card.Text>
+          </Card.Body>
+          <Card.Footer>
+            <Button variant="primary">Verify Voter</Button>
+          </Card.Footer>
+        </Card>
+        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
+          <Card.Header style={{ fontSize: "20px" }}>
+            Address :
+          </Card.Header>
+          <Card.Body style={{ fontSize: "18px" }}>
+            <Card.Text>
+              Name:
+            </Card.Text>
+            <Card.Text>
+              Voter-Id:
+            </Card.Text>
+            <Card.Text>
+              Gender:
+            </Card.Text>
+            <Card.Text>
+              Age:
+            </Card.Text>
+          </Card.Body>
+          <Card.Footer>
+            <Button variant="primary">Verify Voter</Button>
+          </Card.Footer>
+        </Card>
+
+        {/* <div className="container m-t-50">
           <div className="row text-center">
 
             <div className="col-xl-3 col-sm-6 mb-5 ">
@@ -76,7 +149,7 @@ class VerifyVoter extends Component {
                     Voter ID <br />
                   </span>
                   <span className="subtitle ">
-                   ABC12345T<br />
+                    ABC12345T<br />
                   </span>
                   <div className="p-t-20">
                     <span className="subtitle ">
@@ -95,7 +168,7 @@ class VerifyVoter extends Component {
             </div>
           </div>
 
-        </div>
+        </div> */}
 
       </div >
     )
