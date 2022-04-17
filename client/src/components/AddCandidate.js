@@ -36,6 +36,9 @@ class AddCandidate extends Component {
   updateGender = (event) => {
     this.setState({ gender: event.target.value });
   };
+  updateParty = (event) => {
+    this.setState({ party: event.target.value });
+  };
 
   addCandidate = async () => {
     await this.state.ElectionInstance.methods
@@ -130,7 +133,7 @@ class AddCandidate extends Component {
                           type="text"
                           placeholder="Age"
                           value={this.state.age}
-                          onChange={this.updateName}
+                          onChange={this.updateAge}
                         />
                       </div>
                       <div className="input-group">
@@ -138,8 +141,8 @@ class AddCandidate extends Component {
                           className="input--style-3"
                           type="text"
                           placeholder="Gender"
-                          value={this.state.age}
-                          onChange={this.updateName}
+                          value={this.state.gender}
+                          onChange={this.updateGender}
                         />
                       </div>
                       <div className="input-group">
