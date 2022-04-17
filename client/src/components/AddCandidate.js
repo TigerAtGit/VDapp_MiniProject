@@ -2,29 +2,55 @@ import React, { Component } from "react";
 import "../css/addcandidate.css";
 import ElectionContract from "../contracts/ElectionContract.json";
 import getWeb3 from "../getWeb3";
+import ipfs from "../ipfs";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
-import UploadCandidateImage from "./UploadCandidateImage";
 
 class AddCandidate extends Component {
   constructor(props) {
     super(props);
-    //   uploadedImage = React.useRef(null);
-    // imageUploader = React.useRef(null);
 
     this.state = {
       ElectionInstance: undefined,
       account: null,
       web3: null,
+      buffer: null,
+      ipfsHash: "",
       name: "",
       party: "",
-      age: "",
+      age: null,
       gender: "",
-      uploadedImage: null,
-      imageUploader: null,
+      uniqueId: null,
+      // uploadedImage: null,
+      // imageUploader: null,
       candidates: null,
       isOwner: false,
     };
+    this.captureFile = this.captureFile.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
+  }
+
+  captureFile(event){
+    console.log('Capturing...');
+    const file = event.target.files[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      this.setState({buffer: Buffer(reader.result)});
+      console.log('buffer', this.state.buffer)
+    }
+  }
+
+  uploadImage(event){
+    console.log('Uploading..');
+    ipfs.files.add(this.state.buffer, (err, result) => {
+      if(err){
+        console.log(err);
+        return
+      }
+      this.setState({ipfsHash: result[0].hash});
+      console.log('ipfsHash', this.state.ipfsHash);
+    })
   }
 
   updateName = (event) => {
@@ -36,14 +62,40 @@ class AddCandidate extends Component {
   updateGender = (event) => {
     this.setState({ gender: event.target.value });
   };
+  updateParty = (event) => {
+    this.setState({ party: event.target.value });
+  };
+  getUID = (event) => {
+    this.setState({ uniqueId: event.target.value });
+  };
+
+
+  // uploadedImage = React.useRef(null);
+  // imageUploader = React.useRef(null);
+
+  // handleImageUpload = e => {
+  //   const [file] = e.target.files;
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     const { current } = uploadedImage;
+  //     current.file = file;
+  //     reader.onload = e => {
+  //       current.src = e.target.result;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
 
   addCandidate = async () => {
     await this.state.ElectionInstance.methods
       .addCandidate(
         this.state.name,
         this.state.party,
+        this.state.gender,
         this.state.age,
-        this.state.gender
+        this.state.uniqueId,
+        this.state.ipfsHash
       )
       .send({ from: this.state.account, gas: 1000000 });
     window.location.reload(false);
@@ -112,7 +164,41 @@ class AddCandidate extends Component {
                 <div className="form">
                   <div className="row">
                     <div className="col-md-4">
-                      <UploadCandidateImage />
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <input
+                          type="file"
+                          onChange={this.captureFile}
+                        />
+                        <div
+                          style={{
+                            height: "250px",
+                            width: "200px",
+                            border: "1px dashed black"
+                          }}
+                        >
+                          <img
+                          src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                          alt="Uploaded image"
+                            style={{
+                              width: "200px",
+                              height: "250px",
+                              position: "absolute"
+                            }}
+                          />
+                        </div>
+                        <button
+                        className="btn btn--blue" 
+                        onClick={this.uploadImage}>
+                          Upload Photo
+                        </button>
+                      </div>
                     </div>
                     <div className="col-md-8">
                       <div className="input-group">
@@ -130,7 +216,7 @@ class AddCandidate extends Component {
                           type="text"
                           placeholder="Age"
                           value={this.state.age}
-                          onChange={this.updateName}
+                          onChange={this.updateAge}
                         />
                       </div>
                       <div className="input-group">
@@ -138,8 +224,17 @@ class AddCandidate extends Component {
                           className="input--style-3"
                           type="text"
                           placeholder="Gender"
-                          value={this.state.age}
-                          onChange={this.updateName}
+                          value={this.state.gender}
+                          onChange={this.updateGender}
+                        />
+                      </div>
+                      <div className="input-group">
+                        <input
+                          className="input--style-3"
+                          type="number"
+                          placeholder="Unique Id"
+                          value={this.state.uniqueId}
+                          onChange={this.getUID}
                         />
                       </div>
                       <div className="input-group">

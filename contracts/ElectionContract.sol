@@ -28,16 +28,25 @@ contract ElectionContract {
     struct Candidate{
         string name;
         string party;
+        string gender;
+        uint age;
+        uint uniqueId;
+        string imghash;
         uint voteCount;
         uint candidateId;
     }
 
     mapping(uint => Candidate) public candidateDetails;
 
-    function addCandidate(string memory _name, string memory _party) public onlyAdmin{
+    function addCandidate(string memory _name, string memory _party, string memory _gender, 
+    uint _age, uint _uniqueId, string memory _imghash) public onlyAdmin{
         Candidate memory newCandidate = Candidate({
             name: _name,
             party: _party,
+            gender: _gender,
+            age: _age,
+            uniqueId: _uniqueId,
+            imghash: _imghash,
             voteCount: 0,
             candidateId: candidateCount + 1001
         });
