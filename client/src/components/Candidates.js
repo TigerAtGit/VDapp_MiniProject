@@ -67,10 +67,54 @@ class Candidates extends Component {
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
+          <div className="card-heading border">
+            <div className="row" id="mainrow">
+              <div className="row" id="insiderow">
+                <div
+                  className="col-md-3"
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <img
+                    src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                    style={{
+                      height: "150px",
+                      width: "120px",
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <div className="title" id="name">
+                    {candidate.name}
+                  </div>
+                  <div className="row">
+                    <div className="col-6">Gender: {candidate.gender}</div>
+                    <div className="col-6">Age: {candidate.age}</div>
+                  </div>
+                </div>
+                <div
+                  className="col-md-3"
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/1200px-Bharatiya_Janata_Party_logo.svg.png"
+                    style={{
+                      height: "150px",
+                      width: "120px",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           // <div className="col-2xl-3 col-sm-6 mb-5">
           //   <div className="bg-white rounded shadow-sm py-5 px-4">
           //     <img
-          //       src={candidateicon}
+          //       src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
           //       alt="candidate's pic"
           //       width="200"
           //       height="200"
@@ -85,113 +129,6 @@ class Candidates extends Component {
           //     </span>
           //   </div>
           // </div>
-          <div>
-      <div className="page-wrapper p-t-100 p-b-100 font-poppins">
-        <div className="wrapper">
-            <div className="card-heading">
-            <div className="row" id="mainrow">
-              <div className="row" id="insiderow">
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/1200px-President_Barack_Obama.jpg"
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <div className="title" id="name">
-                    R.Vishal
-                  </div>
-                  <div className="row">
-                    <div className="col-6">Gender: Male</div>
-                    <div className="col-6">Age: 28</div>
-                    <div className="col-6">Party: BJP</div>
-                    <div className="col-6"></div>
-                  </div>
-                </div>
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/1200px-Bharatiya_Janata_Party_logo.svg.png"
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
-                <div 
-                style={{
-                  paddingTop:"3%"
-                }}
-                ></div>
-                {/* ---------- */}
-                
-              </div>
-              <div className="row" style={{backgroundColor:"rgba(74, 74, 74, 0.8)",marginLeft:"0px"}}>
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/1200px-President_Barack_Obama.jpg"
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <div className="title" id="name">
-                    R.Vishal
-                  </div>
-                  <div className="row">
-                    <div className="col-6">Gender: Male</div>
-                    <div className="col-6">Age: 28</div>
-                    <div className="col-6">Party: BJP</div>
-                    <div className="col-6"></div>
-                  </div>
-                </div>
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/1200px-Bharatiya_Janata_Party_logo.svg.png"
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
-                <div 
-                style={{
-                  paddingTop:"3%"
-                }}
-                ></div>
-                {/* ---------- */}
-                
-              </div>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
         );
       });
@@ -222,7 +159,11 @@ class Candidates extends Component {
 
         <div className="container">
           <div className="row text-center">
-            {candidateList}
+            <div className="page-wrapper p-t-100 p-b-100 font-poppins">
+              <div className="wrapper">
+                {candidateList}
+              </div>
+            </div>
           </div>
         </div>
       </div>

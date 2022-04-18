@@ -34,6 +34,9 @@ const NavBarAdmin = () => {
             ELECTION PHASE
           </NavLink>
         </NavMenu>
+        <NavLink to='/' style={{color:"white",cursor:"arrow",marginRight:"20px"}}>
+          Hi Admin!
+        </NavLink>
       </Nav>
     </>
   );
