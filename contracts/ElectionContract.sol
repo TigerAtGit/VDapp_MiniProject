@@ -63,7 +63,7 @@ contract ElectionContract {
         string name;
         string voterId;
         bool hasVoted;
-        //bool isVerified;
+        bool isVerified;
     }
 
     address[] public voters;
@@ -74,7 +74,8 @@ contract ElectionContract {
             voterAdd: msg.sender,
             name: _name,
             voterId: _voterid,
-            hasVoted: false
+            hasVoted: false,
+            isVerified: false
         });
         voterDetails[msg.sender] = newVoter;
         voters.push(msg.sender);
@@ -85,12 +86,13 @@ contract ElectionContract {
         return voterCount;
     }
 
-    /*
-    function to verify voter
-    */
+    function verifyVoter(address _address) public onlyAdmin {
+        voterDetails[_address].isVerified = true;
+    }
 
     function castVote(uint candidateId) public{
         require(voterDetails[msg.sender].hasVoted == false);
+        require(voterDetails[msg.sender].isVerified == true);
         require(start == true);
         require(end == false);
         candidateDetails[candidateId - 1001].voteCount += 1;

@@ -29,7 +29,6 @@ class Voting extends Component {
   }
 
   castVote = async () => {
-    let candidate = await this.state.ElectionInstance.methods.candidateDetails(this.state.candidateId).call();
     await this.state.ElectionInstance.methods.castVote(this.state.candidateId).send(
       { from: this.state.account, gas: 1000000 }
     );
@@ -96,7 +95,7 @@ class Voting extends Component {
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
-          <div className="col-xl-3 col-sm-6 mb-5">
+          <div className="col-2xl-3 col-sm-6 mb-5">
             <div className="bg-white rounded shadow-sm py-5 px-4">
               <img
                 src={candidateicon}
@@ -147,24 +146,17 @@ class Voting extends Component {
       );
     }
 
-    // if(this.state.myAccount){
-    //   if(!this.state.myAccount.isVerified){
-    //     return(
-    //       <div className="CandidateDetails">
-    //       <div className="CandidateDetails-title">
-    //         <h1>
-    //         You need to verified first for voting.
-    //         </h1>
-    //       </div>
-
-    //       <div className="CandidateDetails-sub-title">
-    //       Please wait....the verification can take time
-    //       </div>
-    //     {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-    //       </div>
-    //     );
-    //   }
-    // }
+    if(this.state.myAccount){
+      if(!this.state.myAccount.isVerified){
+        return(
+         <div>
+            {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+            <h2 className="text-center">YOU ARE NOT VERFIED TO VOTE</h2>
+            <h5 className="text-center">If you have registered kindly wait to be verified.</h5>
+          </div>
+        );
+      }
+    }
 
     if (this.state.myAccount) {
       if (this.state.myAccount.hasVoted) {

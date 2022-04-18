@@ -12,10 +12,27 @@ class Register extends Component {
       ElectionInstance: undefined,
       web3: null,
       account: null,
-      isOwner: false
+      isOwner: false,
+      name: '',
+      voterId: ''
     };
   }
 
+  updateName = event => {
+    this.setState({name : event.target.value});
+  }
+
+  updateVID = event => {
+    this.setState({voterId: event.target.value});
+  }
+
+  registerVoter = async() => {
+    await this.state.ElectionInstance.methods.registerVoter(
+      this.state.name,
+      this.state.voterId
+    ).send({from : this.state.account, gas: 1000000});
+    window.location.reload(false);
+  }
 
   componentDidMount = async () => {
 
@@ -42,11 +59,17 @@ class Register extends Component {
         this.setState({ isOwner: true })
       }
 
-      let start = await this.state.ElectionInstance.methods.getStart().call();
-      let end = await this.state.ElectionInstance.methods.getEnd().call();
+      let voterCount = await this.state.ElectionInstance.methods.getVoterCount().call();
 
-      this.setState({ start: start, end: end })
-
+      for(let i=0; i<voterCount; ++i){
+        let voterAddress = await this.state.ElectionInstance.methods.voters(i).call();
+        if(voterAddress === this.state.account){
+          //isRegistered = true;
+          this.setState({registered: true});
+          break;
+        }
+      }
+      //this.setState({registered : isRegistered});
 
     } catch (error) {
       alert(
@@ -57,6 +80,24 @@ class Register extends Component {
   };
 
   render() {
+    if (!this.state.web3){
+      return(
+        <div>
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Loading...</h2>
+        </div>
+      )
+    }
+
+    if(this.state.registered){
+      return(
+        <div>
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Already Requested to Register</h2>
+        </div>
+      )
+    }
+
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
@@ -71,6 +112,8 @@ class Register extends Component {
                       className="input--style-3"
                       type="text"
                       placeholder="Name"
+                      value={this.state.name}
+                      onChange={this.updateName}
                     />
                   </div>
                   <div className="input-group">
@@ -78,10 +121,12 @@ class Register extends Component {
                       className="input--style-3"
                       type="text"
                       placeholder="Voter Id"
+                      value={this.state.voterId}
+                      onChange={this.updateVID}
                     />
                   </div>
                   <div className="p-t-10">
-                    <button className="btn  btn--blue" onClick='' >
+                    <button className="btn  btn--blue" onClick={this.registerVoter} >
                       Request to Add Voter
                     </button>
                   </div>
