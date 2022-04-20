@@ -3,6 +3,7 @@ import getWeb3 from "../getWeb3";
 import ElectionContract from "../contracts/ElectionContract.json";
 import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
+import { Bars } from 'react-loader-spinner';
 
 class Register extends Component {
 
@@ -19,18 +20,18 @@ class Register extends Component {
   }
 
   updateName = event => {
-    this.setState({name : event.target.value});
+    this.setState({ name: event.target.value });
   }
 
   updateVID = event => {
-    this.setState({voterId: event.target.value});
+    this.setState({ voterId: event.target.value });
   }
 
-  registerVoter = async() => {
+  registerVoter = async () => {
     await this.state.ElectionInstance.methods.registerVoter(
       this.state.name,
       this.state.voterId
-    ).send({from : this.state.account, gas: 1000000});
+    ).send({ from: this.state.account, gas: 1000000 });
     window.location.reload(false);
   }
 
@@ -61,11 +62,11 @@ class Register extends Component {
 
       let voterCount = await this.state.ElectionInstance.methods.getVoterCount().call();
 
-      for(let i=0; i<voterCount; ++i){
+      for (let i = 0; i < voterCount; ++i) {
         let voterAddress = await this.state.ElectionInstance.methods.voters(i).call();
-        if(voterAddress === this.state.account){
+        if (voterAddress === this.state.account) {
           //isRegistered = true;
-          this.setState({registered: true});
+          this.setState({ registered: true });
           break;
         }
       }
@@ -80,20 +81,34 @@ class Register extends Component {
   };
 
   render() {
-    if (!this.state.web3){
-      return(
-        <div>
+    if (!this.state.web3) {
+      return (
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading...</h2>
-        </div>
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2>  Loading... </h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
+          </div>
+        </div >
+        // <div>
+        //   {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        //   <h2>Loading...</h2>
+        // </div>
       )
     }
 
-    if(this.state.registered){
-      return(
+    if (this.state.registered) {
+      return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Already Requested to Register</h2>
+          <div className="d-flex justify-content-center align-items-center p-t-250">
+            <h2>Already Requested to Register</h2>
+          </div>
+
         </div>
       )
     }

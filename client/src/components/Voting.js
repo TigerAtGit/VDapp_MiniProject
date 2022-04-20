@@ -5,6 +5,7 @@ import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
 import "../css/voting.css";
 import candidateicon from "../images/candidatepic.jpg";
+import { Bars } from 'react-loader-spinner'
 
 class Voting extends Component {
   constructor(props) {
@@ -121,10 +122,22 @@ class Voting extends Component {
 
     if (!this.state.web3) {
       return (
-        <div>
+
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading candidates...</h2>
-        </div>
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2>  Loading Candidates... </h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
+          </div>
+        </div >
+        // <div>
+        //   {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        //   <h2>Loading candidates...</h2>
+        // </div>
       );
     }
 
@@ -132,7 +145,10 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>VOTING HAS ENDED!</h2>
+          <div className="d-flex justify-content-center align-items-center p-t-250">
+            <h2>VOTING HAS ENDED!</h2>
+          </div>
+
         </div>
       );
     }
@@ -141,15 +157,18 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h1>VOTING HAS NOT STARTED YET</h1>
+          <div className="d-flex justify-content-center align-items-center p-t-250">
+            <h1>VOTING HAS NOT STARTED YET</h1>
+          </div>
+
         </div>
       );
     }
 
-    if(this.state.myAccount){
-      if(!this.state.myAccount.isVerified){
-        return(
-         <div>
+    if (this.state.myAccount) {
+      if (!this.state.myAccount.isVerified) {
+        return (
+          <div>
             {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
             <h2 className="text-center">YOU ARE NOT VERFIED TO VOTE</h2>
             <h5 className="text-center">If you have registered kindly wait to be verified.</h5>
@@ -173,28 +192,28 @@ class Voting extends Component {
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <br></br>
-          <div className="wrapper wrapper--w780">
-            <div className="card card-3">
-              <div className="card-body">
-                <h2 className="title">Vote</h2>
-                <div className="form">
-                  <div className="input-group">
-                    <input
-                      className="input--style-3"
-                      type="text"
-                      placeholder="Candidate id"
-                      value={this.state.candidateId}
-                      onChange={this.updateCandidateId}
-                    />
-                  </div>
-                  <div className="p-t-10">
-                    <button className="btn  btn--blue" onClick={this.castVote} >
-                      Vote
-                    </button>
-                  </div>
+        <br></br>
+        <div className="wrapper wrapper--w780">
+          <div className="card card-3">
+            <div className="card-body">
+              <h2 className="title">Vote</h2>
+              <div className="form">
+                <div className="input-group">
+                  <input
+                    className="input--style-3"
+                    type="text"
+                    placeholder="Candidate id"
+                    value={this.state.candidateId}
+                    onChange={this.updateCandidateId}
+                  />
+                </div>
+                <div className="p-t-10">
+                  <button className="btn  btn--blue" onClick={this.castVote} >
+                    Vote
+                  </button>
                 </div>
               </div>
+            </div>
           </div>
         </div>
         <br></br>

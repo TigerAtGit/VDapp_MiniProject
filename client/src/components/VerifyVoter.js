@@ -5,6 +5,7 @@ import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { Bars } from 'react-loader-spinner';
 
 
 
@@ -84,11 +85,11 @@ class VerifyVoter extends Component {
                 <p className='text-dark'>Name:</p> {voter.name}
               </Card.Text>
               <Card.Text>
-              <p className='text-dark'>Ethereum Address:</p>{voter.voterAdd}
+                <p className='text-dark'>Ethereum Address:</p>{voter.voterAdd}
               </Card.Text>
               <br></br>
-            {voter.isVerified ? <Button className='btn btn-success'>Verified</Button> : <Button className='btn btn-primary' onClick={this.verifyVoter} value={voter.voterAdd}>Verify Voter</Button>}
-            </Card.Body>         
+              {voter.isVerified ? <Button className='btn btn-success'>Verified</Button> : <Button className='btn btn-primary' onClick={this.verifyVoter} value={voter.voterAdd}>Verify Voter</Button>}
+            </Card.Body>
           </Card>
         )
       })
@@ -96,10 +97,22 @@ class VerifyVoter extends Component {
 
     if (!this.state.web3) {
       return (
-        <div>
+
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading voter requests...</h2>
-        </div>
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2>  Loading voter requests... </h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
+          </div>
+        </div >
+        // <div>
+        //   {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        //   <h2>Loading voter requests...</h2>
+        // </div>
       )
     }
 

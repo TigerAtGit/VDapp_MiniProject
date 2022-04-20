@@ -5,6 +5,7 @@ import getWeb3 from "../getWeb3";
 import ipfs from "../ipfs";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
+import { Bars } from 'react-loader-spinner';
 
 class AddCandidate extends Component {
   constructor(props) {
@@ -30,25 +31,25 @@ class AddCandidate extends Component {
     this.uploadImage = this.uploadImage.bind(this);
   }
 
-  captureFile(event){
+  captureFile(event) {
     console.log('Capturing...');
     const file = event.target.files[0];
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => {
-      this.setState({buffer: Buffer(reader.result)});
+      this.setState({ buffer: Buffer(reader.result) });
       console.log('buffer', this.state.buffer)
     }
   }
 
-  uploadImage(event){
+  uploadImage(event) {
     console.log('Uploading..');
     ipfs.files.add(this.state.buffer, (err, result) => {
-      if(err){
+      if (err) {
         console.log(err);
         return
       }
-      this.setState({ipfsHash: result[0].hash});
+      this.setState({ ipfsHash: result[0].hash });
       console.log('ipfsHash', this.state.ipfsHash);
     })
   }
@@ -136,10 +137,17 @@ class AddCandidate extends Component {
   render() {
     if (!this.state.web3) {
       return (
-        <div>
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Connecting to Web3...</h2>
-        </div>
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2>    Connecting to Web3...</h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
+          </div>
+        </div >
       );
     }
 
@@ -184,8 +192,8 @@ class AddCandidate extends Component {
                           }}
                         >
                           <img
-                          src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
-                          alt="Uploaded image"
+                            src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                            alt="Uploaded image"
                             style={{
                               width: "200px",
                               height: "250px",
@@ -194,8 +202,8 @@ class AddCandidate extends Component {
                           />
                         </div>
                         <button
-                        className="btn btn--blue" 
-                        onClick={this.uploadImage}>
+                          className="btn btn--blue"
+                          onClick={this.uploadImage}>
                           Upload Photo
                         </button>
                       </div>

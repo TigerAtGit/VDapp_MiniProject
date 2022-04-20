@@ -5,6 +5,7 @@ import "../App.css";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
 import "../css/homepage.css";
+import { Bars } from 'react-loader-spinner'
 class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -64,10 +65,24 @@ class Homepage extends Component {
   render() {
     if (!this.state.web3) {
       return (
-        <div>
+
+        <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Connecting to Web3...</h2>
-        </div>
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2>  Connecting to Web3... </h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
+          </div>
+        </div >
+
+
+        // <div>
+        //   {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        //   <h2>Connecting to Web3...</h2>
+        // </div>
       );
     }
     return (
@@ -88,16 +103,16 @@ class Homepage extends Component {
               </div><br></br>
               <i>Why do we need it?</i>
               <br /><i>
-              E-voting system can be used to conduct secure and efficient elections for a 
-              large population with minimal efforts. Blockchain guarantees the security 
-              and protection of the voters’ identity and the votes. Thus,
-              building the trust in the electoral system.</i>
+                E-voting system can be used to conduct secure and efficient elections for a
+                large population with minimal efforts. Blockchain guarantees the security
+                and protection of the voters’ identity and the votes. Thus,
+                building the trust in the electoral system.</i>
             </div>
             <div class="col-md-6">
-              <div 
-              style={{
-                textAlign: "center"
-              }}
+              <div
+                style={{
+                  textAlign: "center"
+                }}
               >
                 <img
                   src={require("../images/Mobilevoting.jpg")}

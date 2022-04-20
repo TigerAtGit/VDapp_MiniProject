@@ -5,6 +5,7 @@ import NavBarAdmin from './NavBarAdmin';
 import NavBarVoter from './NavBarVoter';
 import "../css/candidates.css";
 import candidateicon from "../images/candidatepic.jpg";
+import { Bars } from 'react-loader-spinner';
 
 class Candidates extends Component {
   constructor(props) {
@@ -138,11 +139,25 @@ class Candidates extends Component {
       return (
         <div >
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <div className=" d-flex align-items-center justify-content-center">
-            <h2>Getting details...</h2>
-
+          <div className='p-t-250'>
+            <div className="d-flex justify-content-center align-items-center">
+              <h2> Getting details...</h2>
+            </div>
+            <div className="d-flex justify-content-center align-items-center" >
+              <Bars heigth="100" width="100" color="black" ariaLabel="loading - indicator" />
+            </div>
           </div>
-        </div>
+        </div >
+        // <div >
+        //   {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        //   <div className="  d-flex justify-content-center align-items-center  ">
+
+        //     <h2>Getting details...</h2>
+
+
+
+        //   </div>
+        // </div>
       )
     }
     return (
