@@ -16,10 +16,15 @@ class VerifyVoter extends Component {
       ElectionInstance: undefined,
       web3: null,
       account: null,
-      isOwner: false
+      isOwner: false,
+      voterList: null
     };
   }
 
+  verifyVoter = async event => {
+    await this.state.ElectionInstance.methods.verifyVoter(event.target.value).send({ from: this.state.account, gas: 1000000 });
+    window.location.reload(false);
+  }
 
   componentDidMount = async () => {
 
@@ -46,11 +51,15 @@ class VerifyVoter extends Component {
         this.setState({ isOwner: true })
       }
 
-      let start = await this.state.ElectionInstance.methods.getStart().call();
-      let end = await this.state.ElectionInstance.methods.getEnd().call();
+      let voterCount = await this.state.ElectionInstance.methods.getVoterCount().call();
+      let voterList = [];
 
-      this.setState({ start: start, end: end })
-
+      for (let i = 0; i < voterCount; ++i) {
+        let voterAddress = await this.state.ElectionInstance.methods.voters(i).call();
+        let voterDetails = await this.state.ElectionInstance.methods.voterDetails(voterAddress).call();
+        voterList.push(voterDetails);
+      }
+      this.setState({ voterList: voterList });
 
     } catch (error) {
       alert(
@@ -62,114 +71,55 @@ class VerifyVoter extends Component {
 
 
   render() {
+    let voterList;
+    if (this.state.voterList) {
+      voterList = this.state.voterList.map((voter) => {
+        return (
+          <Card className="text-center mx-auto " bg='dark' text='light' style={{ width: '80%', marginTop: '20px' }}>
+            <Card.Header style={{ fontSize: "20px" }}>
+              VoterId: {voter.voterId}
+            </Card.Header>
+            <Card.Body className='bg-secondary' style={{ fontSize: "18px" }}>
+              <Card.Text>
+                <p className='text-dark'>Name:</p> {voter.name}
+              </Card.Text>
+              <Card.Text>
+              <p className='text-dark'>Ethereum Address:</p>{voter.voterAdd}
+              </Card.Text>
+              <br></br>
+            {voter.isVerified ? <Button className='btn btn-success'>Verified</Button> : <Button className='btn btn-primary' onClick={this.verifyVoter} value={voter.voterAdd}>Verify Voter</Button>}
+            </Card.Body>         
+          </Card>
+        )
+      })
+    }
+
+    if (!this.state.web3) {
+      return (
+        <div>
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>Loading voter requests...</h2>
+        </div>
+      )
+    }
+
+    if (!this.state.isOwner) {
+      return (
+        <div>
+          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
+        </div>
+      );
+    }
+
 
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-
-
-        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
-          <Card.Header style={{ fontSize: "20px" }}>
-            Address :
-          </Card.Header>
-          <Card.Body style={{ fontSize: "18px" }}>
-            <Card.Text>
-              Name:
-            </Card.Text>
-            <Card.Text>
-              Voter-Id:
-            </Card.Text>
-            <Card.Text>
-              Gender:
-            </Card.Text>
-            <Card.Text>
-              Age:
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <Button variant="primary">Verify Voter</Button>
-          </Card.Footer>
-        </Card>
-        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
-          <Card.Header style={{ fontSize: "20px" }}>
-            Address :
-          </Card.Header>
-          <Card.Body style={{ fontSize: "18px" }}>
-            <Card.Text>
-              Name:
-            </Card.Text>
-            <Card.Text>
-              Voter-Id:
-            </Card.Text>
-            <Card.Text>
-              Gender:
-            </Card.Text>
-            <Card.Text>
-              Age:
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <Button variant="primary">Verify Voter</Button>
-          </Card.Footer>
-        </Card>
-        <Card className="text-center" bg='dark' text='light' style={{ width: '100 %', margin: '100px' }}>
-          <Card.Header style={{ fontSize: "20px" }}>
-            Address :
-          </Card.Header>
-          <Card.Body style={{ fontSize: "18px" }}>
-            <Card.Text>
-              Name:
-            </Card.Text>
-            <Card.Text>
-              Voter-Id:
-            </Card.Text>
-            <Card.Text>
-              Gender:
-            </Card.Text>
-            <Card.Text>
-              Age:
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <Button variant="primary">Verify Voter</Button>
-          </Card.Footer>
-        </Card>
-
-        {/* <div className="container m-t-50">
-          <div className="row text-center">
-
-            <div className="col-xl-3 col-sm-6 mb-5 ">
-              <div className="bg-black rounded shadow-sm ">
-
-                <div className="card-body">
-                  <div className="p-t-20">
-                    <h2 className="title">Kush</h2>
-                  </div>
-                  <span className="subtitle">
-                    Voter ID <br />
-                  </span>
-                  <span className="subtitle ">
-                    ABC12345T<br />
-                  </span>
-                  <div className="p-t-20">
-                    <span className="subtitle ">
-                      Voter address:<br />
-                      <span classname='subtitle'> sdsdfafgsdfgsdfgdfsfsdfsdfsdf<br />
-                      </span>
-                    </span>
-                  </div>
-                  <div className="p-t-50 p-b-20">
-                    <button className="btn  btn--blue" onClick={this.castVote} >
-                      Verify Voter
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div> */}
-
+        <div>
+          <h1 className='text-center'>Verify Voters</h1>
+        </div>
+        {voterList}
       </div >
     )
   }
