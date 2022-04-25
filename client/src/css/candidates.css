@@ -8,7 +8,6 @@ body {
 .social-link {
     width: 30px;
     height: 30px;
-    border: 1px solid #ddd;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +19,55 @@ body {
 
 .social-link:hover,
 .social-link:focus {
-    background: #ddd;
     text-decoration: none;
     color: #555;
+}
+
+.card-heading {
+    background: #012B39;
+    border-radius: 0.25em;
+    border-collapse: collapse;
+    /* margin: 1em; */
+}
+
+#insiderow {
+    font-weight: 400;
+    padding: 0.65em 1em;
+    margin-left: 10px;
+}
+
+#rowitem,
+#rowitem2,
+#rowitem3 {
+    transition: background 0.25s ease;
+    color: #fff;
+    font-weight: 400;
+    padding: 0.65em 1em;
+    border-bottom: 1px solid #364043;
+}
+
+
+/* #rowitem:hover {
+    background: #014055;
+} */
+
+
+/* 
+#rowitem2:hover {
+    background: #6a8892;
+}
+
+#rowitem3:hover {
+    background: #014055;
+} */
+
+#header {
+    border-bottom: 1px solid #364043;
+    color: #E2B842;
+    font-size: 140%;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    text-align: center;
+    /* margin-left: 10px; */
+    margin-top: 0%;
 }
