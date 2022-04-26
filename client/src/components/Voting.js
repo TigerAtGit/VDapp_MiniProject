@@ -16,7 +16,7 @@ class Voting extends Component {
       web3: null,
       candidateList: null,
       candidateId: '',
-      toggle: false,
+      // toggle: false,
       myAccount: null,
       start: false,
       end: false,
@@ -28,11 +28,12 @@ class Voting extends Component {
     this.setState({ candidateId: event.target.value });
   }
 
-  castVote = async () => {
-    await this.state.ElectionInstance.methods.castVote(this.state.candidateId).send(
+  castVote = async (candidateId) => {
+    console.log(candidateId);
+    await this.state.ElectionInstance.methods.castVote(candidateId).send(
       { from: this.state.account, gas: 1000000 }
     );
-    this.setState({ toggle: false });
+    //this.setState({ toggle: false });
     window.location.reload(false);
   }
 
@@ -98,7 +99,7 @@ class Voting extends Component {
           <div className="col-2xl-3 col-sm-6 mb-5">
             <div className="bg-white rounded shadow-sm py-5 px-4">
               <img
-                src={candidateicon}
+                src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
                 alt="candidate's pic"
                 width="200"
                 height="200"
@@ -111,6 +112,11 @@ class Voting extends Component {
               <span className="small text-uppercase text-muted">
                 Candidate Id: {candidate.candidateId}
               </span>
+              <div className="p-t-10">
+                <button className="btn  btn--blue" onClick={() => this.castVote(candidate.candidateId)} >
+                  Vote
+                </button>
+              </div>
             </div>
 
           </div>
@@ -146,10 +152,10 @@ class Voting extends Component {
       );
     }
 
-    if(this.state.myAccount){
-      if(!this.state.myAccount.isVerified){
-        return(
-         <div>
+    if (this.state.myAccount) {
+      if (!this.state.myAccount.isVerified) {
+        return (
+          <div>
             {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
             <h2 className="text-center">YOU ARE NOT VERFIED TO VOTE</h2>
             <h5 className="text-center">If you have registered kindly wait to be verified.</h5>
@@ -173,30 +179,30 @@ class Voting extends Component {
     return (
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <br></br>
-          <div className="wrapper wrapper--w780">
-            <div className="card card-3">
-              <div className="card-body">
-                <h2 className="title">Vote</h2>
-                <div className="form">
-                  <div className="input-group">
-                    <input
-                      className="input--style-3"
-                      type="text"
-                      placeholder="Candidate id"
-                      value={this.state.candidateId}
-                      onChange={this.updateCandidateId}
-                    />
-                  </div>
-                  <div className="p-t-10">
-                    <button className="btn  btn--blue" onClick={this.castVote} >
-                      Vote
-                    </button>
-                  </div>
+        <br></br>
+        {/* <div className="wrapper wrapper--w780">
+          <div className="card card-3">
+            <div className="card-body">
+              <h2 className="title">Vote</h2>
+              <div className="form">
+                <div className="input-group">
+                  <input
+                    className="input--style-3"
+                    type="text"
+                    placeholder="Candidate id"
+                    value={this.state.candidateId}
+                    onChange={this.updateCandidateId}
+                  />
+                </div>
+                <div className="p-t-10">
+                  <button className="btn  btn--blue" onClick={this.castVote} >
+                    Vote
+                  </button>
                 </div>
               </div>
+            </div>
           </div>
-        </div>
+        </div> */}
         <br></br>
         <div className="container">
           <div className="row text-center">
