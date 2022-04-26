@@ -4,23 +4,11 @@ import getWeb3 from "../getWeb3";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
 import "../css/candidates.css";
-// import "../images/PartyLogo/"
-import partyimages from "../PartyImages.json";
 import candidateicon from "../images/candidatepic.jpg";
 
 class Candidates extends Component {
   constructor(props) {
     super(props);
-    const sampleJSON = {
-      BJP: "./images/PartyLogo/BJP.webp",
-      AITC: "./images/PartyLogo/AITC.png",
-      BSP: "./images/PartyLogo/BSP.webp",
-      CPI: "./images/PartyLogo/CPI.png",
-      "CPI(M)": "./images/PartyLogo/CPI(M).png",
-      INC: "./images/PartyLogo/INC.webp",
-      NCP: "./images/PartyLogo/NCP.webp",
-      NPP: "./images/PartyLogo/NPP.jpg",
-    };
 
     this.state = {
       ElectionInstance: undefined,
@@ -38,16 +26,6 @@ class Candidates extends Component {
       window.location.reload();
     }
     try {
-      const sampleJSON = {
-        BJP: "./images/PartyLogo/BJP.webp",
-        AITC: "./images/PartyLogo/AITC.png",
-        BSP: "./images/PartyLogo/BSP.webp",
-        CPI: "../../images/PartyLogo/CPI.png",
-        "CPI(M)": "./images/PartyLogo/CPI(M).png",
-        INC: "./images/PartyLogo/INC.webp",
-        NCP: "./images/PartyLogo/NCP.webp",
-        NPP: "./images/PartyLogo/NPP.jpg",
-      };
 
       const web3 = await getWeb3();
 
@@ -93,14 +71,15 @@ class Candidates extends Component {
   render() {
     let candidateList;
     const sampleJSON = {
-      BJP: "webp",
-      AITC: "png",
-      BSP: "webp",
-      CPI: "png",
-      "CPI(M)": "png",
-      INC: "webp",
-      NCP: "webp",
-      NPP: "jpg",
+      BJP: "BJP.webp",
+      AITC: "AITC.png",
+      BSP: "BSP.webp",
+      CPI: "CPI.png",
+      CPIM: "CPI(M).png",
+      INC: "INC.webp",
+      NCP: "NCP.webp",
+      AAP: "AAP.png",
+      Others: "other.png"
     };
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
@@ -114,7 +93,8 @@ class Candidates extends Component {
               id="rowitem"
             >
               <img
-                src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                src={ candidate.imghash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                alt="Unable to load candidate's image"
                 style={{
                   height: "150px",
                   width: "120px",
@@ -122,12 +102,12 @@ class Candidates extends Component {
               />
             </div>
             <div className="col-md-6" id="rowitem">
-              <div className="title" id="name">
+              <div className="display-4" id="name">
                 {candidate.name}
               </div>
-              <div className="row">
-                <div className="col-6">Gender: {candidate.gender}</div>
-                <div className="col-6">Age: {candidate.age}</div>
+              <div className="row mt-5">
+                <div className="col-6 fs-4">Gender: {candidate.gender}</div>
+                <div className="col-6 fs-4">Age: {candidate.age}</div>
               </div>
             </div>
             <div
@@ -138,9 +118,7 @@ class Candidates extends Component {
               id="rowitem"
             >
               <img
-                src={require(`../images/PartyLogo/${candidate.party}.${
-                  sampleJSON[candidate.party]
-                }`)}
+                src={require(`../images/PartyLogo/${sampleJSON[candidate.party]}`)}
                 style={{
                   height: "180px",
                   width: "160px",
@@ -182,21 +160,20 @@ class Candidates extends Component {
                   <div className="row" id="mainrow">
                     <div className="row" id="insiderow">
                       <div className="row" id="header">
-                      <div className="col-md-3">
+                        <div className="col-md-3">
                           Candidate Image
-                      </div>
-                      <div className="col-md-6">
+                        </div>
+                        <div className="col-md-6">
                           Candidate Details
-                      </div>
-                      <div className="col-md-3">
+                        </div>
+                        <div className="col-md-3">
                           Party Logo
-                      </div>
-                      
-                      </div>
-                      <div className="row" id="candidatelist"> 
-                      {candidateList}
-                      </div>
+                        </div>
 
+                      </div>
+                      <div className="row" id="candidatelist">
+                        {candidateList}
+                      </div>
                     </div>
                   </div>
                 </div>

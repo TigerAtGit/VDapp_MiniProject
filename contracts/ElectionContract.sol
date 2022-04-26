@@ -69,17 +69,26 @@ contract ElectionContract {
     address[] public voters;
     mapping(address => Voter) public voterDetails;
 
-    function registerVoter(string memory _name, string memory _voterid) public {
+    event voterRegister(
+        string _voterId
+    );
+
+    event voteEvent(
+        uint indexed _candidateId
+    );
+
+    function registerVoter(string memory _name, string memory _voterId) public {
         Voter memory newVoter = Voter({
             voterAdd: msg.sender,
             name: _name,
-            voterId: _voterid,
+            voterId: _voterId,
             hasVoted: false,
             isVerified: false
         });
         voterDetails[msg.sender] = newVoter;
         voters.push(msg.sender);
         voterCount += 1;
+        emit voterRegister(_voterId);
     }
 
     function getVoterCount() public view returns (uint){
@@ -97,6 +106,7 @@ contract ElectionContract {
         require(end == false);
         candidateDetails[candidateId - 1001].voteCount += 1;
         voterDetails[msg.sender].hasVoted = true;
+        emit voteEvent(candidateId);
     }
 
     function startElection() public onlyAdmin {

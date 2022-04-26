@@ -5,6 +5,7 @@ import getWeb3 from "../getWeb3";
 import ipfs from "../ipfs";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
+import candidateicon from "../images/candidatepic.jpg";
 
 class AddCandidate extends Component {
   constructor(props) {
@@ -17,12 +18,10 @@ class AddCandidate extends Component {
       buffer: null,
       ipfsHash: "",
       name: "",
-      party: "",
+      party: "BJP",
       age: null,
       gender: "",
       uniqueId: null,
-      // uploadedImage: null,
-      // imageUploader: null,
       candidates: null,
       isOwner: false,
     };
@@ -49,7 +48,7 @@ class AddCandidate extends Component {
         return;
       }
       this.setState({ ipfsHash: result[0].hash });
-      console.log("ipfsHash", this.state.ipfsHash);
+      // console.log("ipfsHash", this.state.ipfsHash);
     });
   }
 
@@ -63,14 +62,12 @@ class AddCandidate extends Component {
     this.setState({ gender: event.target.value });
   };
   updateParty = (event) => {
-    console.log(event.target.value);
     this.setState({ party: event.target.value });
   };
   getUID = (event) => {
     this.setState({ uniqueId: event.target.value });
   };
   setGender(event) {
-    console.log(event.target.value);
     this.setState({ gender: event.target.value });
   }
 
@@ -168,8 +165,8 @@ class AddCandidate extends Component {
                           }}
                         >
                           <img
-                            src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
-                            alt="Uploaded image"
+                            src={this.state.ipfsHash === "" ?  candidateicon  : `https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                            alt="Uploaded file"
                             style={{
                               width: "200px",
                               height: "250px",
@@ -213,15 +210,6 @@ class AddCandidate extends Component {
                           onChange={this.getUID}
                         />
                       </div>
-                      {/* <div className="input-group">
-                      <input
-                        className="input--style-3 js-datepicker"
-                        type="text"
-                        placeholder="Party"
-                        value={this.state.party}
-                        onChange={this.updateParty}
-                      />
-                      </div> */}
                       <div
                         className="input-group"
                         style={{ borderWidth: "0px" }}
@@ -353,11 +341,11 @@ class AddCandidate extends Component {
                           <option name="cpi" value="CPI">
                             CPI
                           </option>
-                          <option name="cpim" value="CPI(M)">
+                          <option name="cpim" value="CPIM">
                             CPI(M)
                           </option>
-                          <option name="npp" value="NPP">
-                            NPP
+                          <option name="aap" value="AAP">
+                            AAP
                           </option>
                           <option name="others" value="Others">
                             Others
