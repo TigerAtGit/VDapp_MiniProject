@@ -30,27 +30,27 @@ class AddCandidate extends Component {
     this.uploadImage = this.uploadImage.bind(this);
   }
 
-  captureFile(event){
-    console.log('Capturing...');
+  captureFile(event) {
+    console.log("Capturing...");
     const file = event.target.files[0];
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => {
-      this.setState({buffer: Buffer(reader.result)});
-      console.log('buffer', this.state.buffer)
-    }
+      this.setState({ buffer: Buffer(reader.result) });
+      console.log("buffer", this.state.buffer);
+    };
   }
 
-  uploadImage(event){
-    console.log('Uploading..');
+  uploadImage(event) {
+    console.log("Uploading..");
     ipfs.files.add(this.state.buffer, (err, result) => {
-      if(err){
+      if (err) {
         console.log(err);
-        return
+        return;
       }
-      this.setState({ipfsHash: result[0].hash});
-      console.log('ipfsHash', this.state.ipfsHash);
-    })
+      this.setState({ ipfsHash: result[0].hash });
+      console.log("ipfsHash", this.state.ipfsHash);
+    });
   }
 
   updateName = (event) => {
@@ -63,29 +63,16 @@ class AddCandidate extends Component {
     this.setState({ gender: event.target.value });
   };
   updateParty = (event) => {
+    console.log(event.target.value);
     this.setState({ party: event.target.value });
   };
   getUID = (event) => {
     this.setState({ uniqueId: event.target.value });
   };
-
-
-  // uploadedImage = React.useRef(null);
-  // imageUploader = React.useRef(null);
-
-  // handleImageUpload = e => {
-  //   const [file] = e.target.files;
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     const { current } = uploadedImage;
-  //     current.file = file;
-  //     reader.onload = e => {
-  //       current.src = e.target.result;
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
+  setGender(event) {
+    console.log(event.target.value);
+    this.setState({ gender: event.target.value });
+  }
 
   addCandidate = async () => {
     await this.state.ElectionInstance.methods
@@ -169,33 +156,31 @@ class AddCandidate extends Component {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
-                        <input
-                          type="file"
-                          onChange={this.captureFile}
-                        />
+                        <input type="file" onChange={this.captureFile} />
                         <div
                           style={{
                             height: "250px",
                             width: "200px",
-                            border: "1px dashed black"
+                            border: "1px dashed black",
                           }}
                         >
                           <img
-                          src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
-                          alt="Uploaded image"
+                            src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                            alt="Uploaded image"
                             style={{
                               width: "200px",
                               height: "250px",
-                              position: "absolute"
+                              position: "absolute",
                             }}
                           />
                         </div>
                         <button
-                        className="btn btn--blue" 
-                        onClick={this.uploadImage}>
+                          className="btn btn--blue"
+                          onClick={this.uploadImage}
+                        >
                           Upload Photo
                         </button>
                       </div>
@@ -222,39 +207,171 @@ class AddCandidate extends Component {
                       <div className="input-group">
                         <input
                           className="input--style-3"
-                          type="text"
-                          placeholder="Gender"
-                          value={this.state.gender}
-                          onChange={this.updateGender}
-                        />
-                      </div>
-                      <div className="input-group">
-                        <input
-                          className="input--style-3"
                           type="number"
                           placeholder="Unique Id"
                           value={this.state.uniqueId}
                           onChange={this.getUID}
                         />
                       </div>
-                      <div className="input-group">
-                        <input
-                          className="input--style-3 js-datepicker"
-                          type="text"
-                          placeholder="Party"
+                      {/* <div className="input-group">
+                      <input
+                        className="input--style-3 js-datepicker"
+                        type="text"
+                        placeholder="Party"
+                        value={this.state.party}
+                        onChange={this.updateParty}
+                      />
+                      </div> */}
+                      <div
+                        className="input-group"
+                        style={{ borderWidth: "0px" }}
+                      >
+                        <div
+                          style={{
+                            color: "white",
+                            paddingTop: "8px",
+                            fontSize: "110%",
+                            paddingRight: "8px",
+                          }}
+                        >
+                          Gender:
+                        </div>
+                        <div onChange={this.setGender.bind(this)}>
+                          <div
+                            style={{
+                              height: "30px",
+                              width: "20px",
+                              float: "left",
+                              display: "block",
+                              paddingTop:"10px"
+                            }}
+                          >
+                            <input type="radio" value="Male" name="gender" />
+                          </div>
+                          <div
+                            style={{
+                              color: "white",
+                              paddingTop: "7px",
+                              fontSize: "110%",
+                              paddingRight: "8px",
+                              paddingLeft: "4px",
+                              float: "left",
+                              display: "block",
+                            }}
+                          >
+                            Male
+                          </div>
+                          <div
+                            style={{
+                              height: "30px",
+                              width: "20px",
+                              float: "left",
+                              display: "block",
+                              paddingTop:"10px"
+                            }}
+                          >
+                            <input type="radio" value="Female" name="gender" />
+                          </div>
+                          <div
+                            style={{
+                              color: "white",
+                              paddingTop: "7px",
+                              fontSize: "110%",
+                              paddingRight: "8px",
+                              paddingLeft: "4px",
+                              float: "left",
+                              display: "block",
+                            }}
+                          >
+                            Female
+                          </div>
+                          <div
+                            style={{
+                              height: "30px",
+                              width: "20px",
+                              float: "left",
+                              display: "block",
+                              paddingTop:"10px"
+                            }}
+                          >
+                            <input type="radio" value="Others" name="gender" />
+                          </div>
+                          <div
+                            style={{
+                              color: "white",
+                              paddingTop: "7px",
+                              fontSize: "110%",
+                              paddingRight: "8px",
+                              paddingLeft: "4px",
+                              float: "left",
+                              display: "block",
+                            }}
+                          >
+                            Others
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="input-group"
+                        style={{ borderWidth: "0px" }}
+                      >
+                        <div
+                          style={{
+                            color: "white",
+                            paddingTop: "8px",
+                            fontSize: "110%",
+                            paddingRight: "8px",
+                          }}
+                        >
+                          Select Party
+                        </div>
+                        <select
                           value={this.state.party}
                           onChange={this.updateParty}
-                        />
-                        <i className="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                      </div>
-                      <div className="p-t-10">
-                        <button
-                          className="btn btn--pill btn--green"
-                          onClick={this.addCandidate}
+                          style={{
+                            backgroundColor: "#222222",
+                            color: "white",
+                            padding: "2%",
+                            fontSize: "110%",
+                          }}
                         >
-                          ADD
-                        </button>
+                          <option name="bjp" value="BJP">
+                            BJP
+                          </option>
+                          <option name="inc" value="INC">
+                            INC
+                          </option>
+                          <option name="ncp" value="NCP">
+                            NCP
+                          </option>
+                          <option name="aitc" value="AITC">
+                            AITC
+                          </option>
+                          <option name="bsp" value="BSP">
+                            BSP
+                          </option>
+                          <option name="cpi" value="CPI">
+                            CPI
+                          </option>
+                          <option name="cpim" value="CPI(M)">
+                            CPI(M)
+                          </option>
+                          <option name="npp" value="NPP">
+                            NPP
+                          </option>
+                          <option name="others" value="Others">
+                            Others
+                          </option>
+                        </select>
                       </div>
+                    </div>
+                    <div className="p-t-10">
+                      <button
+                        className="btn btn--pill btn--green"
+                        onClick={this.addCandidate}
+                      >
+                        ADD
+                      </button>
                     </div>
                   </div>
                 </div>

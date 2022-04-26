@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 import ElectionContract from "../contracts/ElectionContract.json";
 import getWeb3 from "../getWeb3";
-import NavBarAdmin from './NavBarAdmin';
-import NavBarVoter from './NavBarVoter';
+import NavBarAdmin from "./NavBarAdmin";
+import NavBarVoter from "./NavBarVoter";
 import "../css/candidates.css";
+// import "../images/PartyLogo/"
+import partyimages from "../PartyImages.json";
 import candidateicon from "../images/candidatepic.jpg";
 
 class Candidates extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    const sampleJSON = {
+      BJP: "./images/PartyLogo/BJP.webp",
+      AITC: "./images/PartyLogo/AITC.png",
+      BSP: "./images/PartyLogo/BSP.webp",
+      CPI: "./images/PartyLogo/CPI.png",
+      "CPI(M)": "./images/PartyLogo/CPI(M).png",
+      INC: "./images/PartyLogo/INC.webp",
+      NCP: "./images/PartyLogo/NCP.webp",
+      NPP: "./images/PartyLogo/NPP.jpg",
+    };
 
     this.state = {
       ElectionInstance: undefined,
@@ -16,16 +28,27 @@ class Candidates extends Component {
       web3: null,
       candidateCount: 0,
       candidateList: null,
-      isOwner: false
-    }
+      isOwner: false,
+    };
   }
 
   componentDidMount = async () => {
     if (!window.location.hash) {
-      window.location = window.location + '#loaded';
+      window.location = window.location + "#loaded";
       window.location.reload();
     }
     try {
+      const sampleJSON = {
+        BJP: "./images/PartyLogo/BJP.webp",
+        AITC: "./images/PartyLogo/AITC.png",
+        BSP: "./images/PartyLogo/BSP.webp",
+        CPI: "../../images/PartyLogo/CPI.png",
+        "CPI(M)": "./images/PartyLogo/CPI(M).png",
+        INC: "./images/PartyLogo/INC.webp",
+        NCP: "./images/PartyLogo/NCP.webp",
+        NPP: "./images/PartyLogo/NPP.jpg",
+      };
+
       const web3 = await getWeb3();
 
       const accounts = await web3.eth.getAccounts();
@@ -34,116 +57,110 @@ class Candidates extends Component {
       const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
         ElectionContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address
       );
 
-      this.setState({ ElectionInstance: instance, web3: web3, account: accounts[0] });
+      this.setState({
+        ElectionInstance: instance,
+        web3: web3,
+        account: accounts[0],
+      });
 
-      let candidateCount = await this.state.ElectionInstance.methods.getTotalCandidates().call();
+      let candidateCount = await this.state.ElectionInstance.methods
+        .getTotalCandidates()
+        .call();
       this.setState({ candidateCount: candidateCount });
 
       let candidateList = [];
       for (let i = 0; i < candidateCount; i++) {
-        let candidate = await this.state.ElectionInstance.methods.candidateDetails(i).call();
+        let candidate = await this.state.ElectionInstance.methods
+          .candidateDetails(i)
+          .call();
         candidateList.push(candidate);
       }
       this.setState({ candidateList: candidateList });
 
       const owner = await this.state.ElectionInstance.methods.getOwner().call();
       if (this.state.account === owner) {
-        this.setState({ isOwner: true })
+        this.setState({ isOwner: true });
       }
-
     } catch (error) {
-      alert(
-        `Failed to load candidate details!`,
-      );
+      alert(`Failed to load candidate details!`);
       console.error(error);
     }
   };
 
   render() {
     let candidateList;
+    const sampleJSON = {
+      BJP: "webp",
+      AITC: "png",
+      BSP: "webp",
+      CPI: "png",
+      "CPI(M)": "png",
+      INC: "webp",
+      NCP: "webp",
+      NPP: "jpg",
+    };
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
-          <div className="card-heading border">
-            <div className="row" id="mainrow">
-              <div className="row" id="insiderow">
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <div className="title" id="name">
-                    {candidate.name}
-                  </div>
-                  <div className="row">
-                    <div className="col-6">Gender: {candidate.gender}</div>
-                    <div className="col-6">Age: {candidate.age}</div>
-                  </div>
-                </div>
-                <div
-                  className="col-md-3"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/1200px-Bharatiya_Janata_Party_logo.svg.png"
-                    style={{
-                      height: "150px",
-                      width: "120px",
-                    }}
-                  />
-                </div>
+          <>
+            <div
+              className="col-md-3"
+              style={{
+                textAlign: "center",
+              }}
+              id="rowitem"
+            >
+              <img
+                src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                style={{
+                  height: "150px",
+                  width: "120px",
+                }}
+              />
+            </div>
+            <div className="col-md-6" id="rowitem">
+              <div className="title" id="name">
+                {candidate.name}
+              </div>
+              <div className="row">
+                <div className="col-6">Gender: {candidate.gender}</div>
+                <div className="col-6">Age: {candidate.age}</div>
               </div>
             </div>
-          </div>
-
-          // <div className="col-2xl-3 col-sm-6 mb-5">
-          //   <div className="bg-white rounded shadow-sm py-5 px-4">
-          //     <img
-          //       src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
-          //       alt="candidate's pic"
-          //       width="200"
-          //       height="200"
-          //       className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-          //     />
-          //     <h5 className="mb-0">{candidate.name}</h5>
-          //     <span className="small text-uppercase text-muted">
-          //       Party: {candidate.party} <br />
-          //     </span>
-          //     <span className="small text-uppercase text-muted">
-          //       Candidate Id: {candidate.candidateId}
-          //     </span>
-          //   </div>
-          // </div>
-
+            <div
+              className="col-md-3"
+              style={{
+                textAlign: "center",
+              }}
+              id="rowitem"
+            >
+              <img
+                src={require(`../images/PartyLogo/${candidate.party}.${
+                  sampleJSON[candidate.party]
+                }`)}
+                style={{
+                  height: "180px",
+                  width: "160px",
+                }}
+              />
+            </div>
+          </>
         );
       });
     }
 
     if (!this.state.web3) {
       return (
-        <div >
+        <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
           <div className=" d-flex align-items-center justify-content-center">
             <h2>Getting details...</h2>
-
           </div>
         </div>
-      )
+      );
     }
     return (
       <div>
@@ -159,9 +176,30 @@ class Candidates extends Component {
 
         <div className="container">
           <div className="row text-center">
-            <div className="page-wrapper p-t-100 p-b-100 font-poppins">
+            <div className="page-wrapper p-t-40 p-b-100 font-poppins">
               <div className="wrapper">
-                {candidateList}
+                <div className="card-heading border">
+                  <div className="row" id="mainrow">
+                    <div className="row" id="insiderow">
+                      <div className="row" id="header">
+                      <div className="col-md-3">
+                          Candidate Image
+                      </div>
+                      <div className="col-md-6">
+                          Candidate Details
+                      </div>
+                      <div className="col-md-3">
+                          Party Logo
+                      </div>
+                      
+                      </div>
+                      <div className="row" id="candidatelist"> 
+                      {candidateList}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
