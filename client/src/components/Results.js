@@ -124,7 +124,7 @@ class Results extends Component {
     if (!this.state.isOwner) {
       return (
         <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <NavBarVoter />
           <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
         </div>
       );
@@ -133,9 +133,9 @@ class Results extends Component {
 
     return (
       <div>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <div className="text-center">
-          <h1> RESULTS </h1><br></br>
+        <NavBarAdmin />
+        <div className="text-center mt-4">
+          <h1 className="text-black"> RESULTS </h1><br></br>
           <Button onClick={this.result}>See Results</Button>
         </div>
     

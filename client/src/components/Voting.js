@@ -96,9 +96,10 @@ class Voting extends Component {
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
-          <div className="col-2xl-3 col-sm-6 mb-5">
+          <div className="col-md-4">
             <div className="bg-white rounded shadow-sm py-5 px-4">
               <img
+              style={{height:200, width:200}}
                 src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
                 alt="candidate's pic"
                 width="200"

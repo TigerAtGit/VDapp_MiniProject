@@ -7,7 +7,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 
-
 class VerifyVoter extends Component {
 
   constructor(props) {
@@ -79,12 +78,12 @@ class VerifyVoter extends Component {
             <Card.Header style={{ fontSize: "20px" }}>
               VoterId: {voter.voterId}
             </Card.Header>
-            <Card.Body className='bg-secondary' style={{ fontSize: "18px" }}>
+            <Card.Body className='bg-secondary' style={{ fontSize: "16px" }}>
               <Card.Text>
-                <p className='text-dark'>Name:</p> {voter.name}
+                <p className='text-dark'><b>Name: </b>{voter.name}</p>
               </Card.Text>
               <Card.Text>
-              <p className='text-dark'>Ethereum Address:</p>{voter.voterAdd}
+              <p className='text-dark'><b>Ethereum Address: </b>{voter.voterAdd}</p>
               </Card.Text>
               <br></br>
             {voter.isVerified ? <Button className='btn btn-success'>Verified</Button> : <Button className='btn btn-primary' onClick={this.verifyVoter} value={voter.voterAdd}>Verify Voter</Button>}
@@ -106,18 +105,17 @@ class VerifyVoter extends Component {
     if (!this.state.isOwner) {
       return (
         <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <NavBarVoter />
           <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
         </div>
       );
     }
 
-
     return (
       <div>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+       <NavBarAdmin />
         <div>
-          <h1 className='text-center'>Verify Voters</h1>
+          <h1 className='text-center text-black mt-4'>Verify Voters</h1>
         </div>
         {voterList}
       </div >

@@ -5,6 +5,7 @@ import "../App.css";
 import NavBarAdmin from "./NavBarAdmin";
 import NavBarVoter from "./NavBarVoter";
 import "../css/homepage.css";
+
 class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -77,16 +78,17 @@ class Homepage extends Component {
           <div className="text-center text-white">
             <div className="col-lg-8 mx-auto">
               <h1 className="display-4">Welcome To VDapp</h1>
+              <b>VDapp</b> is a decentralized e-voting application developed using Blockchain.
             </div>
           </div>
         </div>
         <div class="container-fluid" id="about">
           <div class="row">
-            <div class="col-md-6">
-              <div>
+            <div class="col-md-6 fs-4">
+              {/* <div>
                 <b>VDapp</b> is a decentralized e-voting application developed using Blockchain.
-              </div><br></br>
-              <i>Why do we need it?</i>
+              </div><br></br> */}
+              <i><b>Why do we need it?</b></i>
               <br /><i>
               E-voting system can be used to conduct secure and efficient elections for a 
               large population with minimal efforts. Blockchain guarantees the security 

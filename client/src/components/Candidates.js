@@ -96,18 +96,18 @@ class Candidates extends Component {
                 src={ candidate.imghash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${candidate.imghash}`}
                 alt="Unable to load candidate's image"
                 style={{
-                  height: "150px",
-                  width: "120px",
+                  height: "160px",
+                  width: "130px",
                 }}
               />
             </div>
             <div className="col-md-6" id="rowitem">
-              <div className="display-4" id="name">
+              <div className="display-6" id="name">
                 {candidate.name}
               </div>
-              <div className="row mt-5">
-                <div className="col-6 fs-4">Gender: {candidate.gender}</div>
-                <div className="col-6 fs-4">Age: {candidate.age}</div>
+              <div className="row mt-4">
+                <div className="col-6 fs-5">Gender: {candidate.gender}</div>
+                <div className="col-6 fs-5">Age: {candidate.age}</div>
               </div>
             </div>
             <div
@@ -120,8 +120,8 @@ class Candidates extends Component {
               <img
                 src={require(`../images/PartyLogo/${sampleJSON[candidate.party]}`)}
                 style={{
-                  height: "180px",
-                  width: "160px",
+                  height: "120px",
+                  width: "90px",
                 }}
               />
             </div>
@@ -146,8 +146,8 @@ class Candidates extends Component {
         <div className="container py-5">
           <div className="row text-center text-white">
             <div className="col-lg-8 mx-auto">
-              <h1 className="display-4">List of Candidates</h1>
-              <h3>Total candidates: {this.state.candidateCount}</h3>
+              <h1 className="display-5 text-dark">List of Candidates</h1>
+              <h3 className="text-black-50">Total candidates: {this.state.candidateCount}</h3>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@ class Candidates extends Component {
                 <div className="card-heading border">
                   <div className="row" id="mainrow">
                     <div className="row" id="insiderow">
-                      <div className="row" id="header">
+                      <div className="row fs-3" id="header">
                         <div className="col-md-3">
                           Candidate Image
                         </div>
@@ -169,7 +169,6 @@ class Candidates extends Component {
                         <div className="col-md-3">
                           Party Logo
                         </div>
-
                       </div>
                       <div className="row" id="candidatelist">
                         {candidateList}

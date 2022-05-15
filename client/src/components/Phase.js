@@ -87,14 +87,14 @@ class Phase extends Component{
     if(!this.state.isOwner){
       return(
         <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <NavBarVoter />
           <h1>THIS CAN BE ACCESSED BY ADMIN ONLY!</h1>
         </div>
       );
     }
     return (
       <div>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        <NavBarAdmin />
         <div className="h-100 d-flex justify-content-center align-items-center">
           {this.state.start
             ? <Button onClick={this.startElection} className="btn btn-lg btn-warning mt-4">Start Election</Button>

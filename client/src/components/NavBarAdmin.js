@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Nav,
   NavLink,
+  NavBtn,
+  NavBtnLink,
   Bars,
   NavMenu,
 } from './NavbarElements';
@@ -10,33 +12,28 @@ const NavBarAdmin = () => {
   return (
     <>
       <Nav>
-        <NavLink to='/'>
-          <img src={require('../images/logo.svg')} alt='logo' />
-        </NavLink>
+        <img src={require('../images/logo.svg')} alt='logo' />
         <Bars />
-        <NavMenu>
-          <NavLink to='/' activeStyle>
-            HOME
-          </NavLink>
+        <NavMenu className='fw-bold m-auto'>
           <NavLink to='/CandidateDetails' activeStyle>
             CANDIDATES
-          </NavLink>
-          <NavLink to='/VerifyVoter' activeStyle>
-            VERIFY VOTER
           </NavLink>
           <NavLink to='/AddCandidate' activeStyle>
             ADD CANDIDATE
           </NavLink>
-          <NavLink to='/Result' activeStyle>
-            RESULTS
+          <NavLink to='/VerifyVoter' activeStyle>
+            VERIFY VOTER
           </NavLink>
           <NavLink to='/Phase' activeStyle>
             ELECTION PHASE
           </NavLink>
+          <NavLink to='/Result' activeStyle>
+            RESULTS
+          </NavLink>
         </NavMenu>
-        <NavLink to='/' style={{color:"white",cursor:"arrow",marginRight:"20px"}}>
-          Hi Admin!
-        </NavLink>
+        <NavBtn className='fw-bolder'>
+          <NavBtnLink to='/'>ADMIN PORTAL</NavBtnLink>
+        </NavBtn>
       </Nav>
     </>
   );

@@ -43,7 +43,7 @@ body {
     color: #fff;
     font-weight: 400;
     padding: 0.65em 1em;
-    border-bottom: 1px solid #364043;
+    border-bottom: 1px solid #c7b8b8;
 }
 
 
@@ -62,7 +62,7 @@ body {
 } */
 
 #header {
-    border-bottom: 1px solid #364043;
+    border-bottom: 1px solid #ffffff;
     color: #E2B842;
     font-size: 140%;
     font-weight: 600;

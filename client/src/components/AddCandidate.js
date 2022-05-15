@@ -18,7 +18,7 @@ class AddCandidate extends Component {
       buffer: null,
       ipfsHash: "",
       name: "",
-      party: "BJP",
+      party: "Others",
       age: null,
       gender: "",
       uniqueId: null,
@@ -118,6 +118,15 @@ class AddCandidate extends Component {
   };
 
   render() {
+    if (!this.state.isOwner) {
+      return (
+        <div>
+          <NavBarVoter />
+          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
+        </div>
+      );
+    }
+
     if (!this.state.web3) {
       return (
         <div>
@@ -127,24 +136,14 @@ class AddCandidate extends Component {
       );
     }
 
-    if (!this.state.isOwner) {
-      return (
-        <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
-        </div>
-      );
-    }
-
     return (
       <div>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-        <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
+        <NavBarAdmin />
+        <div className="page-wrapper bg-gra-01 p-t-50 font-poppins">
           <div className="wrapper wrapper--w780">
             <div className="card bg-secondary">
-              <div className="card-heading"></div>
+              <div className="card-heading title text-center p-2">Add Candidate</div>
               <div className="card-body">
-                <h2 className="title">Add Candidate</h2>
                 <div className="form">
                   <div className="row">
                     <div className="col-md-4">
@@ -165,7 +164,7 @@ class AddCandidate extends Component {
                           }}
                         >
                           <img
-                            src={this.state.ipfsHash === "" ?  candidateicon  : `https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                            src={this.state.ipfsHash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
                             alt="Uploaded file"
                             style={{
                               width: "200px",
@@ -231,7 +230,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop:"10px"
+                              paddingTop: "10px"
                             }}
                           >
                             <input type="radio" value="Male" name="gender" />
@@ -255,7 +254,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop:"10px"
+                              paddingTop: "10px"
                             }}
                           >
                             <input type="radio" value="Female" name="gender" />
@@ -279,7 +278,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop:"10px"
+                              paddingTop: "10px"
                             }}
                           >
                             <input type="radio" value="Others" name="gender" />
@@ -353,16 +352,16 @@ class AddCandidate extends Component {
                         </select>
                       </div>
                     </div>
-                    <div className="p-t-10">
-                      <button
-                        className="btn btn--pill btn--green"
-                        onClick={this.addCandidate}
-                      >
-                        ADD
-                      </button>
-                    </div>
                   </div>
                 </div>
+              </div>
+              <div className="d-grid gap-2 col-6 mx-auto p-2">
+                <button
+                  className="btn btn--pill btn--green"
+                  onClick={this.addCandidate}
+                >
+                  ADD CANDIDATE
+                </button>
               </div>
             </div>
           </div>
