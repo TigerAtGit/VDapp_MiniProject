@@ -83,31 +83,78 @@ class Results extends Component {
 
   render() {
     let candidateList;
-      console.log(this.state.result);
+    const sampleJSON = {
+      BJP: "BJP.webp",
+      AITC: "AITC.png",
+      BSP: "BSP.webp",
+      CPI: "CPI.png",
+      CPIM: "CPI(M).png",
+      INC: "INC.webp",
+      NCP: "NCP.webp",
+      AAP: "AAP.png",
+      Others: "other.png"
+    };
+      // console.log(this.state.result);
       if(this.state.result){
-        candidateList = this.state.result.map((candidate) => {
+        var res = this.state.result;
+        var count = 1;
+        res.sort((a, b) => b.voteCount - a.voteCount);
+        candidateList = res.map((candidate) => {
           return (
-            <div className="col-xl-3 col-sm-6 mb-5">
-            <div className="bg-white rounded shadow-sm py-5 px-4">
-              <img
-                src={candidateicon}
-                alt="candidate's pic"
-                width="200"
-                height="200"
-                className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-              />
-              <h5 className="mb-0">{candidate.name}</h5>
-              <h5 className="mb-0">Total votes: {candidate.voteCount}</h5>
-              <span className="small text-uppercase text-muted">
-                Party: {candidate.party} <br/>
-              </span>
-              <span className="small text-uppercase text-muted">
-                Candidate Id: {candidate.candidateId}
-              </span>
+            <>
+            <div
+              className="col-md-1"
+              style={{
+                textAlign: "center",
+              }}
+              id="rowitem"
+            >
+            <h1>{count ++}</h1>
             </div>
-          </div>
+            <div
+              className="col-md-3"
+              style={{
+                textAlign: "center",
+              }}
+              id="rowitem"
+            >
+              <img
+                src={ candidate.imghash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                alt="Unable to load candidate's image"
+                style={{
+                  height: "160px",
+                  width: "130px",
+                }}
+              />
+            </div>
+            <div className="col-md-5" id="rowitem">
+              <div className="display-6" id="name">
+                {candidate.name}
+              </div>
+              <div className="row mt-4">
+                <div className="fs-5">Total Votes: {candidate.voteCount}</div>
+              </div>
+            </div>
+            <div
+              className="col-md-3"
+              style={{
+                textAlign: "center",
+              }}
+              id="rowitem"
+            >
+              <img
+                src={require(`../images/PartyLogo/${sampleJSON[candidate.party]}`)}
+                style={{
+                  height: "120px",
+                  width: "90px",
+                }}
+              />
+            </div>
+          </>
           );
-        });
+        }
+        );
+        console.log(candidateList);
       }
     
 
@@ -143,7 +190,33 @@ class Results extends Component {
   
         <div className="container">
           <div className="row text-center">
-            {candidateList}
+            <div className="page-wrapper p-t-40 p-b-100 font-poppins">
+              <div className="wrapper">
+                <div className="card-heading border">
+                  <div className="row" id="mainrow">
+                    <div className="row" id="insiderow">
+                      <div className="row fs-3" id="header">
+                        <div className="col-md-1">
+                          #
+                        </div>
+                        <div className="col-md-3">
+                          Candidate Image
+                        </div>
+                        <div className="col-md-5">
+                          Candidate
+                        </div>
+                        <div className="col-md-3">
+                          Party Logo
+                        </div>
+                      </div>
+                      <div className="row" id="candidatelist">
+                        {candidateList}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

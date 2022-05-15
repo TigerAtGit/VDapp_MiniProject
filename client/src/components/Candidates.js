@@ -124,6 +124,7 @@ class Candidates extends Component {
                   width: "90px",
                 }}
               />
+              <p className="fs-5 mt-2">{candidate.party}</p>
             </div>
           </>
         );
