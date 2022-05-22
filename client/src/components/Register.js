@@ -84,7 +84,14 @@ class Register extends Component {
       return(
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
           <h2>Loading...</h2>
+          </div>
         </div>
       )
     }
@@ -93,7 +100,14 @@ class Register extends Component {
       return(
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Already Requested to Register</h2>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h2>Already Requested to Register</h2>
+          </div>
         </div>
       )
     }

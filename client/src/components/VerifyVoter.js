@@ -97,7 +97,14 @@ class VerifyVoter extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading voter requests...</h2>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h2>Loading voter requests...</h2>
+          </div>
         </div>
       )
     }

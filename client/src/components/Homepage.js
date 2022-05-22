@@ -67,7 +67,14 @@ class Homepage extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Connecting to Web3...</h2>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h2>Connecting to Web3...</h2>
+          </div>
         </div>
       );
     }
