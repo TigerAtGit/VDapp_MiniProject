@@ -22,7 +22,7 @@ class AddCandidate extends Component {
       age: null,
       gender: "",
       uniqueId: null,
-      candidateList: null,
+      candidateIDs: null,
       isOwner: false,
       errors: {},
     };
@@ -68,7 +68,7 @@ class AddCandidate extends Component {
   getUID = (event) => {
     this.setState({ uniqueId: event.target.value });
   };
-  setGender(event) {
+  setGender = (event) => {
     this.setState({ gender: event.target.value });
   }
 
@@ -76,52 +76,42 @@ class AddCandidate extends Component {
     let errors = {};
     let formIsValid = true;
 
-    //Name
     if (typeof this.state.name !== "undefined") {
-      if (!this.state.name.match(/^[a-zA-Z]+$/)) {
+      if (!this.state.name.match(/^[a-z ,.'-]+$/i)) {
         formIsValid = false;
-        errors["name"] = "Only letters";
+        errors["name"] = "Invalid name";
       }
     }
     if (!this.state.name) {
       formIsValid = false;
-      errors["name"] = "Cannot be empty";
+      errors["name"] = "*This field cannot be empty";
     }
 
-    //Id
-    if (this.state.uniqueId < 18) {
+    if (this.state.uniqueId < 9999) {
       formIsValid = false;
-      errors["uniqueid"] = "Id must be greater than 0";
+      errors["uniqueid"] = "Id must be of atleast 5 digits";
     }
-
     if (!this.state.uniqueId) {
       formIsValid = false;
-      errors["uniqueid"] = "Cannot be empty";
+      errors["uniqueid"] = "*This field cannot be empty";
     }
-
-
-    //Age
     
     if (this.state.age > 100) {
       formIsValid = false;
-      errors["age"] = "Age must be greater than 100";
+      errors["age"] = "Age must be less than 100";
     }
-
     if (this.state.age < 18) {
       formIsValid = false;
-      errors["age"] = "Age must be less than 18";
+      errors["age"] = "Age must be atleast 18";
     }
-
     if (!this.state.age) {
       formIsValid = false;
-      errors["age"] = "Cannot be empty";
+      errors["age"] = "*This field cannot be empty";
     }
 
-
-    //Gender
     if (!this.state.gender) {
       formIsValid = false;
-      errors["gender"] = "Cannot be empty";
+      errors["gender"] = "*Please select gender";
     }
 
     this.setState({ errors: errors });
@@ -130,6 +120,8 @@ class AddCandidate extends Component {
 
   addCandidate = async () => {
     if (this.handleValidation()) {
+      this.state.candidateIDs.some(item => this.state.uniqueId === item) ? 
+      alert("Candidate with same ID has been already added!"):
       await this.state.ElectionInstance.methods
         .addCandidate(
           this.state.name,
@@ -142,7 +134,7 @@ class AddCandidate extends Component {
         .send({ from: this.state.account, gas: 1000000 });
       window.location.reload(false);
     } else {
-      alert("Form has errors.");
+      alert("Form validation error!");
     }
   };
 
@@ -173,15 +165,15 @@ class AddCandidate extends Component {
         .call();
       this.setState({ candidateCount: candidateCount });
 
-      let candidateList = [];
+      let candidateIDs = [];
       for (let i = 0; i < candidateCount; i++) {
         let candidate = await this.state.ElectionInstance.methods
           .candidateDetails(i)
           .call();
-        candidateList.push(candidate.uniqueId);
+        candidateIDs.push(candidate.uniqueId);
       }
-      this.setState({ candidateList: candidateList });
-      console.log(candidateList);
+      this.setState({ candidateIDs: candidateIDs });
+      // console.log(candidateIDs);
 
       const owner = await this.state.ElectionInstance.methods.getOwner().call();
       if (this.state.account === owner) {
@@ -194,6 +186,23 @@ class AddCandidate extends Component {
   };
 
   render() {
+    if (!this.state.web3) {
+      return (
+        <div>
+          <NavBarAdmin />
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
+          >
+            <h2>Connecting to Web3...</h2>
+          </div>
+        </div>
+      );
+    }
+
     if (!this.state.isOwner) {
       return (
         <div>
@@ -211,22 +220,6 @@ class AddCandidate extends Component {
       );
     }
 
-    if (!this.state.web3) {
-      return (
-        <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <div
-            className="container"
-            style={{
-              textAlign: "center",
-              marginTop: "200px",
-            }}
-          >
-            <h2>Connecting to Web3...</h2>
-          </div>
-        </div>
-      );
-    }
 
     return (
       <div>
@@ -292,7 +285,7 @@ class AddCandidate extends Component {
                           onChange={this.updateName}
                         />
                       </div>
-                      <span style={{ color: "red" }}>
+                      <span style={{ color: "#FF9494", fontWeight: "bold" }}>
                         {this.state.errors["name"]}
                       </span>
 
@@ -312,7 +305,7 @@ class AddCandidate extends Component {
                           onChange={this.updateAge}
                         />
                       </div>
-                      <span style={{ color: "red" }}>
+                      <span style={{color: "#FF9494", fontWeight: "bold" }}>
                         {this.state.errors["age"]}
                       </span>
 
@@ -332,7 +325,7 @@ class AddCandidate extends Component {
                           onChange={this.getUID}
                         />
                       </div>
-                      <span style={{ color: "red" }}>
+                      <span style={{ color: "#FF9494", fontWeight: "bold" }}>
                         {this.state.errors["uniqueid"]}
                       </span>
                       <div
@@ -429,7 +422,7 @@ class AddCandidate extends Component {
                           </div>
                         </div>
                       </div>
-                      <span style={{ color: "red" }}>
+                      <span style={{ color: "#FF9494", fontWeight: "bold" }}>
                         {this.state.errors["gender"]}
                       </span>
                       <div

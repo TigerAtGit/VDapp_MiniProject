@@ -29,29 +29,27 @@ class Register extends Component {
     let errors = {};
     let formIsValid = true;
 
-    //Name
     if (typeof this.state.name !== "undefined") {
-      if (!this.state.name.match(/^[a-zA-Z]+$/)) {
+      if (!this.state.name.match(/^[a-z ,.'-]+$/i)) {
         formIsValid = false;
-        errors["name"] = "Only letters";
+        errors["name"] = "Invalid Name";
       }
     }
     if (!this.state.name) {
       formIsValid = false;
-      errors["name"] = "Cannot be empty";
+      errors["name"] = "Please enter your name";
     }
 
-    //Id
+    if (typeof this.state.voterId !== "undefined") {
+      if (!this.state.voterId.match(/^[A-Z]{3}[0-9]{7}$/)) {
+        formIsValid = false;
+        errors["voterid"] = "Voter ID should be of format ABC1234567";
+      }
+    }
     if (!this.state.voterId) {
       formIsValid = false;
-      errors["voterid"] = "Cannot be empty";
+      errors["voterid"] = "Please provide your voter ID";
     }
-    // if (typeof this.state.voterId !== "undefined") {
-    //   if (!this.state.voterId.match(/^[a-zA-Z]+$/)) {
-    //     formIsValid = false;
-    //     errors["voterid"] = "Follow Format XXX1234567";
-    //   }
-    // }
 
     this.setState({ errors: errors });
     return formIsValid;
@@ -64,7 +62,7 @@ class Register extends Component {
         .send({ from: this.state.account, gas: 1000000 });
       window.location.reload(false);
     } else {
-      alert("Form has errors.");
+      alert("Form validation error!");
     }
   };
 
@@ -105,12 +103,10 @@ class Register extends Component {
           .voters(i)
           .call();
         if (voterAddress === this.state.account) {
-          //isRegistered = true;
           this.setState({ registered: true });
           break;
         }
       }
-      //this.setState({registered : isRegistered});
     } catch (error) {
       alert(`Failed to connect with Web3!`);
       console.error(error);
@@ -138,7 +134,7 @@ class Register extends Component {
     if (this.state.registered) {
       return (
         <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <NavBarVoter />
           <div
             className="container"
             style={{
@@ -154,7 +150,7 @@ class Register extends Component {
 
     return (
       <div>
-        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+        <NavBarVoter />
         <div className="page-wrapper bg-gra-01 p-t-100 p-b-100 font-poppins">
           <div className="wrapper wrapper--w780">
             <div className="card card-3">
@@ -177,7 +173,7 @@ class Register extends Component {
                   <div
                     style={{
                       height: "10px",
-                      width: "130px",
+                      width: "auto",
                       float: "left",
                       display: "block",
                       marginBottom: "20px",
@@ -194,8 +190,8 @@ class Register extends Component {
                   <div className="input-group" style={{ paddingBottom: "0px", marginBottom: "0px", marginTop:"30px" }}>
                     <input
                       className="input--style-3"
-                      type="number"
-                      placeholder="Voter Id"
+                      type="text"
+                      placeholder="Voter Id (ABC1234567)"
                       value={this.state.voterId}
                       onChange={this.updateVID}
                     />
@@ -203,7 +199,7 @@ class Register extends Component {
                   <div
                     style={{
                       height: "10px",
-                      width: "130px",
+                      width: "auto",
                       float: "left",
                       display: "block",
                       marginBottom: "20px",

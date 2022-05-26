@@ -15,17 +15,17 @@ const NavBarVoter = () => {
         <img className='justify-content-start' src={require('../images/logo.svg')} alt='logo' />
         <Bars />
         <NavMenu className='fw-bold m-auto'>
-          <NavLink to='/' activeStyle>
-            HOME
-          </NavLink>
           <NavLink to='/CandidateDetails' activeStyle>
             CANDIDATES
+          </NavLink>
+          <NavLink to='/Register' activeStyle>
+            REGISTER
           </NavLink>
           <NavLink to='/Vote' activeStyle>
             VOTE
           </NavLink>
-          <NavLink to='/Register' activeStyle>
-            REGISTER
+          <NavLink to='/Result' activeStyle>
+            RESULTS
           </NavLink>
         </NavMenu>
         <NavBtn className='fw-bolder'>

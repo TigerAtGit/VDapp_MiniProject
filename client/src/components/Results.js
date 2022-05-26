@@ -157,6 +157,22 @@ class Results extends Component {
         console.log(candidateList);
       }
     
+      if (this.state.start || !this.state.end) {
+        return (
+          <div>
+            {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+            <div
+              className="container"
+              style={{
+                textAlign: "center",
+                marginTop: "200px",
+              }}
+            >
+              <h2>VOTING IS NOT COMPLETED YET!!</h2>
+            </div>
+          </div>
+        );
+      }
 
     if (!this.state.web3) {
       return (
@@ -176,19 +192,10 @@ class Results extends Component {
       );
     }
 
-    if (!this.state.isOwner) {
-      return (
-        <div>
-          <NavBarVoter />
-          <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
-        </div>
-      );
-    }
-
 
     return (
       <div>
-        <NavBarAdmin />
+        {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
         <div className="text-center mt-4">
           <h1 className="text-black"> RESULTS </h1><br></br>
           <Button onClick={this.result}>See Results</Button>

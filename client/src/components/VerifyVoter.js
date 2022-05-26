@@ -96,7 +96,7 @@ class VerifyVoter extends Component {
     if (!this.state.web3) {
       return (
         <div>
-          {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
+          <NavBarAdmin />
           <div className="container"
           style={{
             textAlign: "center",

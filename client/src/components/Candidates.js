@@ -142,7 +142,7 @@ class Candidates extends Component {
               marginTop: "200px"
             }}
             >
-              <h2>Getting details...</h2>
+              <h2>Getting Candidates details...</h2>
             </div>
           </div>
         </div>

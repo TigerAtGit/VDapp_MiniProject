@@ -123,7 +123,7 @@ class Homepage extends Component {
         </div>
 
         <div className="container-fluid" id="footer">
-          <h5>Your user address is {this.state.account} {this.state.isOwner ? <p>(Admin)</p> : <p></p>}</h5>
+          <h5>Your account address is {this.state.account} {this.state.isOwner ? <p>(Admin)</p> : <p></p>}</h5>
         </div>
       </div>
     );
