@@ -24,6 +24,7 @@ class AddCandidate extends Component {
       uniqueId: null,
       candidates: null,
       isOwner: false,
+      errors: {},
     };
     this.captureFile = this.captureFile.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -71,18 +72,78 @@ class AddCandidate extends Component {
     this.setState({ gender: event.target.value });
   }
 
+  handleValidation() {
+    let errors = {};
+    let formIsValid = true;
+
+    //Name
+    if (typeof this.state.name !== "undefined") {
+      if (!this.state.name.match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors["name"] = "Only letters";
+      }
+    }
+    if (!this.state.name) {
+      formIsValid = false;
+      errors["name"] = "Cannot be empty";
+    }
+
+    //Id
+    if (this.state.uniqueId < 18) {
+      formIsValid = false;
+      errors["uniqueid"] = "Id must be greater than 0";
+    }
+
+    if (!this.state.uniqueId) {
+      formIsValid = false;
+      errors["uniqueid"] = "Cannot be empty";
+    }
+
+
+    //Age
+    
+    if (this.state.age > 100) {
+      formIsValid = false;
+      errors["age"] = "Age must be greater than 100";
+    }
+
+    if (this.state.age < 18) {
+      formIsValid = false;
+      errors["age"] = "Age must be less than 18";
+    }
+
+    if (!this.state.age) {
+      formIsValid = false;
+      errors["age"] = "Cannot be empty";
+    }
+
+
+    //Gender
+    if (!this.state.gender) {
+      formIsValid = false;
+      errors["gender"] = "Cannot be empty";
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  }
+
   addCandidate = async () => {
-    await this.state.ElectionInstance.methods
-      .addCandidate(
-        this.state.name,
-        this.state.party,
-        this.state.gender,
-        this.state.age,
-        this.state.uniqueId,
-        this.state.ipfsHash
-      )
-      .send({ from: this.state.account, gas: 1000000 });
-    window.location.reload(false);
+    if (this.handleValidation()) {
+      await this.state.ElectionInstance.methods
+        .addCandidate(
+          this.state.name,
+          this.state.party,
+          this.state.gender,
+          this.state.age,
+          this.state.uniqueId,
+          this.state.ipfsHash
+        )
+        .send({ from: this.state.account, gas: 1000000 });
+      window.location.reload(false);
+    } else {
+      alert("Form has errors.");
+    }
   };
 
   componentDidMount = async () => {
@@ -122,11 +183,12 @@ class AddCandidate extends Component {
       return (
         <div>
           <NavBarVoter />
-          <div className="container"
-          style={{
-            textAlign: "center",
-            marginTop: "200px"
-          }}
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
           >
             <h2>THIS CAN BE ACCESSED BY ADMIN ONLY!</h2>
           </div>
@@ -138,11 +200,12 @@ class AddCandidate extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <div className="container"
-          style={{
-            textAlign: "center",
-            marginTop: "200px"
-          }}
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
           >
             <h2>Connecting to Web3...</h2>
           </div>
@@ -156,7 +219,9 @@ class AddCandidate extends Component {
         <div className="page-wrapper bg-gra-01 p-t-50 font-poppins">
           <div className="wrapper wrapper--w780">
             <div className="card bg-secondary">
-              <div className="card-heading title text-center p-2">Add Candidate</div>
+              <div className="card-heading title text-center p-2">
+                Add Candidate
+              </div>
               <div className="card-body">
                 <div className="form">
                   <div className="row">
@@ -178,7 +243,11 @@ class AddCandidate extends Component {
                           }}
                         >
                           <img
-                            src={this.state.ipfsHash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`}
+                            src={
+                              this.state.ipfsHash === ""
+                                ? candidateicon
+                                : `https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`
+                            }
                             alt="Uploaded file"
                             style={{
                               width: "200px",
@@ -196,7 +265,10 @@ class AddCandidate extends Component {
                       </div>
                     </div>
                     <div className="col-md-8">
-                      <div className="input-group">
+                      <div
+                        className="input-group"
+                        style={{ paddingBottom: "0px", marginBottom: "0px" }}
+                      >
                         <input
                           className="input--style-3"
                           type="text"
@@ -205,16 +277,38 @@ class AddCandidate extends Component {
                           onChange={this.updateName}
                         />
                       </div>
-                      <div className="input-group">
+                      <span style={{ color: "red" }}>
+                        {this.state.errors["name"]}
+                      </span>
+
+                      <div
+                        className="input-group"
+                        style={{
+                          paddingBottom: "0px",
+                          marginBottom: "0px",
+                          marginTop: "20px",
+                        }}
+                      >
                         <input
                           className="input--style-3"
-                          type="text"
+                          type="number"
                           placeholder="Age"
                           value={this.state.age}
                           onChange={this.updateAge}
                         />
                       </div>
-                      <div className="input-group">
+                      <span style={{ color: "red" }}>
+                        {this.state.errors["age"]}
+                      </span>
+
+                      <div
+                        className="input-group"
+                        style={{
+                          paddingBottom: "0px",
+                          marginBottom: "0px",
+                          marginTop: "20px",
+                        }}
+                      >
                         <input
                           className="input--style-3"
                           type="number"
@@ -223,9 +317,17 @@ class AddCandidate extends Component {
                           onChange={this.getUID}
                         />
                       </div>
+                      <span style={{ color: "red" }}>
+                        {this.state.errors["uniqueid"]}
+                      </span>
                       <div
                         className="input-group"
-                        style={{ borderWidth: "0px" }}
+                        style={{
+                          borderWidth: "0px",
+                          paddingBottom: "0px",
+                          marginBottom: "0px",
+                          marginTop: "20px",
+                        }}
                       >
                         <div
                           style={{
@@ -244,7 +346,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop: "10px"
+                              paddingTop: "10px",
                             }}
                           >
                             <input type="radio" value="Male" name="gender" />
@@ -268,7 +370,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop: "10px"
+                              paddingTop: "10px",
                             }}
                           >
                             <input type="radio" value="Female" name="gender" />
@@ -292,7 +394,7 @@ class AddCandidate extends Component {
                               width: "20px",
                               float: "left",
                               display: "block",
-                              paddingTop: "10px"
+                              paddingTop: "10px",
                             }}
                           >
                             <input type="radio" value="Others" name="gender" />
@@ -312,9 +414,12 @@ class AddCandidate extends Component {
                           </div>
                         </div>
                       </div>
+                      <span style={{ color: "red" }}>
+                        {this.state.errors["gender"]}
+                      </span>
                       <div
                         className="input-group"
-                        style={{ borderWidth: "0px" }}
+                        style={{ borderWidth: "0px", marginTop: "20px" }}
                       >
                         <div
                           style={{
