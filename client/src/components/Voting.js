@@ -8,44 +8,42 @@ import candidateicon from "../images/candidatepic.jpg";
 
 class Voting extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       ElectionInstance: undefined,
       account: null,
       web3: null,
       candidateList: null,
-      candidateId: '',
+      candidateId: "",
       // toggle: false,
       myAccount: null,
       start: false,
       end: false,
-      isOwner: false
-    }
+      isOwner: false,
+    };
   }
 
-  updateCandidateId = event => {
+  updateCandidateId = (event) => {
     this.setState({ candidateId: event.target.value });
-  }
+  };
 
   castVote = async (candidateId) => {
     console.log(candidateId);
-    await this.state.ElectionInstance.methods.castVote(candidateId).send(
-      { from: this.state.account, gas: 1000000 }
-    );
+    await this.state.ElectionInstance.methods
+      .castVote(candidateId)
+      .send({ from: this.state.account, gas: 1000000 });
     //this.setState({ toggle: false });
     window.location.reload(false);
-  }
+  };
 
   componentDidMount = async () => {
-
     if (!window.location.hash) {
-      window.location = window.location + '#loaded';
+      window.location = window.location + "#loaded";
       window.location.reload();
     }
 
     try {
-
       const web3 = await getWeb3();
 
       const accounts = await web3.eth.getAccounts();
@@ -54,20 +52,29 @@ class Voting extends Component {
       const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
         ElectionContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address
       );
 
-      this.setState({ ElectionInstance: instance, web3: web3, account: accounts[0] });
+      this.setState({
+        ElectionInstance: instance,
+        web3: web3,
+        account: accounts[0],
+      });
 
-      let myAccount = await this.state.ElectionInstance.methods.voterDetails(this.state.account).call();
+      let myAccount = await this.state.ElectionInstance.methods
+        .voterDetails(this.state.account)
+        .call();
       this.setState({ myAccount: myAccount });
 
-
-      let candidateCount = await this.state.ElectionInstance.methods.getTotalCandidates().call();
+      let candidateCount = await this.state.ElectionInstance.methods
+        .getTotalCandidates()
+        .call();
 
       let candidateList = [];
       for (let i = 0; i < candidateCount; i++) {
-        let candidate = await this.state.ElectionInstance.methods.candidateDetails(i).call();
+        let candidate = await this.state.ElectionInstance.methods
+          .candidateDetails(i)
+          .call();
         candidateList.push(candidate);
       }
       this.setState({ candidateList: candidateList });
@@ -81,17 +88,13 @@ class Voting extends Component {
       if (this.state.account === owner) {
         this.setState({ isOwner: true });
       }
-
     } catch (error) {
-      alert(
-        `Failed to load candidates!`,
-      );
+      alert(`Failed to load candidates!`);
       console.error(error);
     }
   };
 
   render() {
-
     let candidateList;
     if (this.state.candidateList) {
       candidateList = this.state.candidateList.map((candidate) => {
@@ -114,14 +117,15 @@ class Voting extends Component {
                 Candidate Id: {candidate.candidateId}
               </span>
               <div className="p-t-10">
-                <button className="btn  btn--blue" onClick={() => this.castVote(candidate.candidateId)} >
+                <button
+                  className="btn  btn--blue"
+                  onClick={() => this.castVote(candidate.candidateId)}
+                >
                   Vote
                 </button>
               </div>
             </div>
-
           </div>
-
         );
       });
     }
@@ -130,7 +134,15 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Loading candidates...</h2>
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
+          >
+            <h2>Loading candidates...</h2>
+          </div>
         </div>
       );
     }
@@ -139,7 +151,15 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>VOTING HAS ENDED!</h2>
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
+          >
+            <h2>VOTING HAS ENDED!</h2>
+          </div>
         </div>
       );
     }
@@ -148,7 +168,15 @@ class Voting extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h1>VOTING HAS NOT STARTED YET</h1>
+          <div
+            className="container"
+            style={{
+              textAlign: "center",
+              marginTop: "200px",
+            }}
+          >
+            <h1>VOTING HAS NOT STARTED YET</h1>
+          </div>
         </div>
       );
     }
@@ -158,8 +186,18 @@ class Voting extends Component {
         return (
           <div>
             {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-            <h2 className="text-center">YOU ARE NOT VERFIED TO VOTE</h2>
-            <h5 className="text-center">If you have registered kindly wait to be verified.</h5>
+            <div
+              className="container"
+              style={{
+                textAlign: "center",
+                marginTop: "200px",
+              }}
+            >
+              <h2 className="text-center">YOU ARE NOT VERFIED TO VOTE</h2>
+              <h5 className="text-center">
+                If you have registered kindly wait to be verified.
+              </h5>
+            </div>
           </div>
         );
       }
@@ -170,12 +208,19 @@ class Voting extends Component {
         return (
           <div>
             {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-            <h2>YOU HAVE SUCCESSFULLY CASTED YOUR VOTE</h2>
+            <div
+              className="container"
+              style={{
+                textAlign: "center",
+                marginTop: "200px",
+              }}
+            >
+              <h2>YOU HAVE SUCCESSFULLY CASTED YOUR VOTE</h2>
+            </div>
           </div>
         );
       }
     }
-
 
     return (
       <div>
@@ -183,9 +228,7 @@ class Voting extends Component {
         <br></br>
         <br></br>
         <div className="container">
-          <div className="row text-center">
-            {candidateList}
-          </div>
+          <div className="row text-center">{candidateList}</div>
         </div>
       </div>
     );

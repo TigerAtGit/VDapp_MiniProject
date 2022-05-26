@@ -162,7 +162,15 @@ class Results extends Component {
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Getting Results...</h2>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h2>Getting Results...</h2>
+          </div>
+
         </div>
         
       );

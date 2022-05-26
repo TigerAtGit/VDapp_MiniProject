@@ -79,7 +79,14 @@ class Phase extends Component{
       return (
         <div>
           {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
-          <h2>Connecting to Web3...</h2>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h2>Connecting to Web3...</h2>
+          </div>
         </div>
       );
     }
@@ -88,7 +95,14 @@ class Phase extends Component{
       return(
         <div>
           <NavBarVoter />
-          <h1>THIS CAN BE ACCESSED BY ADMIN ONLY!</h1>
+          <div className="container"
+          style={{
+            textAlign: "center",
+            marginTop: "200px"
+          }}
+          >
+            <h1>THIS CAN BE ACCESSED BY ADMIN ONLY!</h1>
+          </div>
         </div>
       );
     }
