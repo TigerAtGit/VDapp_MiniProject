@@ -97,10 +97,10 @@ class Voting extends Component {
       candidateList = this.state.candidateList.map((candidate) => {
         return (
           <div className="col-md-4">
-            <div className="bg-white rounded shadow-sm py-5 px-4">
+            <div className="bg-white rounded shadow-sm py-5 px-4 mb-4">
               <img
               style={{height:200, width:200}}
-                src={`https://ipfs.infura.io/ipfs/${candidate.imghash}`}
+                src={candidate.imghash === "" ? candidateicon : `https://ipfs.infura.io/ipfs/${candidate.imghash}`}
                 alt="candidate's pic"
                 width="200"
                 height="200"
@@ -181,29 +181,6 @@ class Voting extends Component {
       <div>
         {this.state.isOwner ? <NavBarAdmin /> : <NavBarVoter />}
         <br></br>
-        {/* <div className="wrapper wrapper--w780">
-          <div className="card card-3">
-            <div className="card-body">
-              <h2 className="title">Vote</h2>
-              <div className="form">
-                <div className="input-group">
-                  <input
-                    className="input--style-3"
-                    type="text"
-                    placeholder="Candidate id"
-                    value={this.state.candidateId}
-                    onChange={this.updateCandidateId}
-                  />
-                </div>
-                <div className="p-t-10">
-                  <button className="btn  btn--blue" onClick={this.castVote} >
-                    Vote
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <br></br>
         <div className="container">
           <div className="row text-center">

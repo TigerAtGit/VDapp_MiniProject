@@ -22,7 +22,7 @@ class AddCandidate extends Component {
       age: null,
       gender: "",
       uniqueId: null,
-      candidates: null,
+      candidateList: null,
       isOwner: false,
     };
     this.captureFile = this.captureFile.bind(this);
@@ -72,6 +72,8 @@ class AddCandidate extends Component {
   }
 
   addCandidate = async () => {
+    this.state.candidateList.some(item => this.state.uniqueId === item) ? 
+    alert("Candidate with same ID is already added!"):
     await this.state.ElectionInstance.methods
       .addCandidate(
         this.state.name,
@@ -106,6 +108,21 @@ class AddCandidate extends Component {
         web3: web3,
         account: accounts[0],
       });
+
+      let candidateCount = await this.state.ElectionInstance.methods
+        .getTotalCandidates()
+        .call();
+      this.setState({ candidateCount: candidateCount });
+
+      let candidateList = [];
+      for (let i = 0; i < candidateCount; i++) {
+        let candidate = await this.state.ElectionInstance.methods
+          .candidateDetails(i)
+          .call();
+        candidateList.push(candidate.uniqueId);
+      }
+      this.setState({ candidateList: candidateList });
+      console.log(candidateList);
 
       const owner = await this.state.ElectionInstance.methods.getOwner().call();
       if (this.state.account === owner) {
