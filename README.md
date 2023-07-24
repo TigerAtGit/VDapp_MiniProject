@@ -1,6 +1,9 @@
 # VDapp (Decentralised Application for Voting)
 
 It is an E-voting system using Blockchain. 
+## Demo
+
+https://user-images.githubusercontent.com/77017010/170699771-7d6a0109-a8f1-4db8-b122-0ae713db2596.mp4
 
 ## Need of Blockchain
 Using blockchain, voting process can be made more secure, transparent, immutable, and reliable. A blockchain-based voting application does not concern itself with the security of its Internet connection, because any hacker with access to the terminal will not be able to affect other nodes. Voters can effectively submit their vote without revealing their identity or political preferences to the public. Officials can count votes with absolute certainty, knowing that each ID can be attributed to one vote, no fakes can be created, and that tampering is impossible.
@@ -26,7 +29,3 @@ This application can be used by Election Commission (officials responsible for c
 - Solidity
 - Web3 JS
 - React JS
-
-## Demo
-
-https://user-images.githubusercontent.com/77017010/170699771-7d6a0109-a8f1-4db8-b122-0ae713db2596.mp4
